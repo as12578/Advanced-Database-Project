@@ -72,6 +72,17 @@ class TransactionManager:
 
 		return False
 
+	def _pendingOperationToString(pendingOperation):
+		operationOptions = pendingOperation['options']
+
+		if pendingOperation['operation'] == Operation.NONE:
+			return ''
+
+		if pendingOperation['operation'] == Operation.READ:
+			return 'Read %s'%operationOptions['key']
+
+		return '\nWrite %s: %s\nPending Sites: %s \nWritten Sites: %s'%(operationOptions['key'], operationOptions['value'], operationOptions['pendingSites'], operationOptions['writtenSites'])
+
 	def print():
 		print('\n=========================Current Transactions=========================')
 
@@ -80,8 +91,10 @@ class TransactionManager:
 			print('Read Only:', TransactionManager.transactions[transaction]['readOnly'])
 			print('Start Time:', TransactionManager.transactions[transaction]['startTime'])
 			lockObj = TransactionManager.transactions[transaction]['locks']
-			print('Locks:\n\t%s'%'\n\t'.join(map(lambda key: key + ': ' + '   '.join(map(lambda site: ':'.join([site, lockObj[key][site]['lockType'].name, '%d'%lockObj[key][site]['firstGrant']]), lockObj[key])), lockObj)))
+			print('Locks:\n\t%s'%'\n\t'.join(map(lambda key: key + ': ' + '   '.join(map(lambda site: ':'.join([site, lockObj[key][site]['lockType'].name, '%d'%lockObj[key][site]['firstGrant']]), filter(lambda site: 'lockType' in lockObj[key][site], lockObj[key]))), lockObj)))
+			print('Pending Operation:', TransactionManager._pendingOperationToString(TransactionManager.transactions[transaction]['pendingOperation']))
 			print()
+
 		print('======================================================================')
 
 	def detectDeadlock():
@@ -126,8 +139,7 @@ class TransactionManager:
 						'operation': Operation.READ,
 						'options': {
 							'key': key
-						},
-						'responseRequested': True
+						}
 					})
 
 			return
@@ -165,8 +177,7 @@ class TransactionManager:
 					'operation': Operation.READ,
 					'options': {
 						'key': key
-					},
-					'responseRequested': True
+					}
 				})
 
 	def writeValue(transactionName, key, value):
@@ -194,7 +205,7 @@ class TransactionManager:
 			failedSites = []
 			if SM.sites[site.site]['available'] == False:
 				failedSites.append(site)
-				TransactionManager.transactions[transactionName]['pendingOperation']['options']['pendingSites'] = filter(lambda pendingSite: pendingSite.site != site.site, TransactionManager.transactions[transactionName]['pendingOperation']['options']['pendingSites'])
+				TransactionManager.transactions[transactionName]['pendingOperation']['options']['pendingSites'] = list(filter(lambda pendingSite: pendingSite.site != site.site, TransactionManager.transactions[transactionName]['pendingOperation']['options']['pendingSites']))
 			elif key in TransactionManager.transactions[transactionName]['locks'] and site.site in TransactionManager.transactions[transactionName]['locks'][key] and 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site] and TransactionManager.transactions[transactionName]['locks'][key][site.site]['lockType'] == LockType.EXCLUSIVE:
 				TransactionManager.doPendingOperation(transactionName, site.site)
 			else:
@@ -204,6 +215,7 @@ class TransactionManager:
 				site.LM.requestLock(transactionName, key, LockType.EXCLUSIVE)
 
 		if len(failedSites) == len(sites):
+			# Not updating pendingSites since a write to the first available site will suffice
 			for site in failedSites:
 				if key not in TransactionManager.transactions[transactionName]['locks']:
 					TransactionManager.transactions[transactionName]['locks'][key] = {}
@@ -213,8 +225,7 @@ class TransactionManager:
 					'operation': Operation.WRITE,
 					'options': {
 						'key': key,
-						'value': value,
-						'responseRequested': True
+						'value': value
 					}
 				})
 
@@ -228,25 +239,6 @@ class TransactionManager:
 			}
 		TransactionManager.transactions[transactionName]['locks'][key][site]['lockType'] = lockType
 		TransactionManager.doPendingOperation(transactionName, site)
-
-		# # Clear request on all other sites
-		# SM = DatabaseManager.DatabaseManager.SM
-		# key_index = int(key[1:])
-		# sites = SM.findSitesForKeyIndex(key_index)
-
-		# for keySite in sites:
-		# 	if keySite.site != site:
-		# 		SM.sites[keySite.site]['pendingOperations'] = filter(lambda pendingOperation: pendingOperation['transaction'] != transactionName, SM.sites[keySite.site]['pendingOperations'])
-
-
-		# SM.sites[site.site]['pendingOperations'].append({
-		# 			'transaction': transactionName,
-		# 			'operation': Operation.READ,
-		# 			'options': {
-		# 				'key': key
-		# 			},
-		# 			'responseRequested': True
-		# 		})
 
 	def doPendingOperation(transactionName, site):
 		SM = DatabaseManager.DatabaseManager.SM
@@ -272,7 +264,7 @@ class TransactionManager:
 				'operation': Operation.NONE,
 				'options': {}
 			}
-		
+
 	def notifySiteFailed(site):
 		# 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site]
 		for transaction in TransactionManager.transactions:

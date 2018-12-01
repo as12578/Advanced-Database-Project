@@ -47,7 +47,6 @@ class SiteManager:
 		# Aborted txns. etc.
 		SiteManager.sites[site]['available'] = True
 		SiteManager.sites[site]['startTime'] = Timer.CURRENT_TIME
-		SiteManager.dumpSite(site)
 		# Recover data
 		for key in SiteManager.sites[site]['site'].DM.data.keys():
 			key_index = int(key[1:])
@@ -59,7 +58,6 @@ class SiteManager:
 					break
 
 		SiteManager.doPendingOperations(site)
-		SiteManager.dumpSite(site)
 
 	def querySiteState(site):
 		return SiteManager.sites[site]['state']
