@@ -30,10 +30,7 @@ class TransactionManager:
 		commitValues = False
 
 		# Check if failed after first read/write
-		if TransactionManager.shouldTransactionAbort(transactionName):
-			# Abort
-			pass
-		else:
+		if not TransactionManager.shouldTransactionAbort(transactionName):
 			# Commit
 			commitValues = True
 			pass
@@ -41,7 +38,10 @@ class TransactionManager:
 		# TODO: Check failed sites
 		transactionLocks = TransactionManager.transactions[transactionName]['locks']
 		for key in transactionLocks.keys():
-			commitData = transactionLocks[key] == LockType.EXCLUSIVE and commitValues
+			commitData = commitValues
+			for site in transactionLocks[key].keys():
+				commitData = commitData and 'lockType' in transactionLocks[key][site] and transactionLocks[key][site]['lockType'] == LockType.EXCLUSIVE
+
 			key_index = int(key[1:])
 			sites = SM.findSitesForKeyIndex(key_index)
 			for site in sites:
@@ -52,9 +52,13 @@ class TransactionManager:
 
 				site.LM.releaseLock(transactionName, key)
 
+		if commitValues:
+			print('%s commits'%transactionName)
+		else:
+			print('%s aborts'%transactionName)
+
 		del TransactionManager.transactions[transactionName]
 
-	# TODO: Also check if site failed after write
 	def shouldTransactionAbort(transaction):
 		if TransactionManager.transactions[transaction]['failed']:
 			return True
@@ -62,19 +66,23 @@ class TransactionManager:
 		for key in TransactionManager.transactions[transaction]['locks']:
 			for site in TransactionManager.transactions[transaction]['locks'][key]:
 				# site where lock was obtained and value read/written. If site failed after first access, abort
-				print(key, site)
-
 				SM = DatabaseManager.DatabaseManager.SM
-				if 'firstGrant' in TransactionManager.transactions[transaction]['locks'][key][site] and (not SM.sites[site]['available'] or TransactionManager.transactions[transaction]['locks'][key][site]['firstGrant'] > SM.sites[site]['startTime']):
-					print('Will Abort')
+				if 'firstGrant' in TransactionManager.transactions[transaction]['locks'][key][site] and (not SM.sites[site]['available'] or TransactionManager.transactions[transaction]['locks'][key][site]['firstGrant'] < SM.sites[site]['startTime']):
 					return True
 
 		return False
-		print('Will Commit')
 
 	def print():
 		print('\n=========================Current Transactions=========================')
-		print(TransactionManager.transactions)
+
+		for transaction in TransactionManager.transactions:
+			print('Transaction:', transaction)
+			print('Read Only:', TransactionManager.transactions[transaction]['readOnly'])
+			print('Start Time:', TransactionManager.transactions[transaction]['startTime'])
+			lockObj = TransactionManager.transactions[transaction]['locks']
+			print('Locks:\n\t%s'%'\n\t'.join(map(lambda key: key + ': ' + '   '.join(map(lambda site: ':'.join([site, lockObj[key][site]['lockType'].name, '%d'%lockObj[key][site]['firstGrant']]), lockObj[key])), lockObj)))
+			print()
+		print('======================================================================')
 
 	def detectDeadlock():
 		# TODO: Deadlock cycle detection
@@ -82,6 +90,7 @@ class TransactionManager:
 
 	def readValue(transactionName, key):
 		# Read from one site
+		# TODO: Request lock from all sites and cancel request when one response received?
 
 		if TransactionManager.transactions[transactionName]['failed']:
 			return
@@ -123,6 +132,7 @@ class TransactionManager:
 
 			return
 			# TODO: Read from one site
+
 		failedSites = []
 		for site in sites:
 			if SM.sites[site.site]['available'] == False:
@@ -130,6 +140,7 @@ class TransactionManager:
 			elif key in TransactionManager.transactions[transactionName]['locks'] and site.site in TransactionManager.transactions[transactionName]['locks'][key] and 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site]:
 				# Already have a lock. Continue to read from site
 				TransactionManager.doPendingOperation(transactionName, site.site)
+				# TODO: Should we cancel lock requests on other sites?
 				break
 			else:
 				# Init TransactionManager.transactions[transactionName]['locks'][key]
@@ -137,11 +148,18 @@ class TransactionManager:
 					TransactionManager.transactions[transactionName]['locks'][key] = {}
 				TransactionManager.transactions[transactionName]['locks'][key][site.site] = {}
 				site.LM.requestLock(transactionName, key, LockType.SHARED)
+				# Check if operation done. Check if lock granted. since we are doing everything sequentially
+				if key in TransactionManager.transactions[transactionName]['locks'] and site.site in TransactionManager.transactions[transactionName]['locks'][key] and 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site]:
+					# TODO: Should we cancel lock requests on other sites?
+					pass
 				break
 
 		# If all sites have failed
 		if len(failedSites) == len(sites):
 			for site in failedSites:
+				if key not in TransactionManager.transactions[transactionName]['locks']:
+					TransactionManager.transactions[transactionName]['locks'][key] = {}
+				TransactionManager.transactions[transactionName]['locks'][key][site.site] = {}
 				SM.sites[site.site]['pendingOperations'].append({
 					'transaction': transactionName,
 					'operation': Operation.READ,
@@ -187,6 +205,9 @@ class TransactionManager:
 
 		if len(failedSites) == len(sites):
 			for site in failedSites:
+				if key not in TransactionManager.transactions[transactionName]['locks']:
+					TransactionManager.transactions[transactionName]['locks'][key] = {}
+				TransactionManager.transactions[transactionName]['locks'][key][site.site] = {}
 				SM.sites[site.site]['pendingOperations'].append({
 					'transaction': transactionName,
 					'operation': Operation.WRITE,
@@ -207,6 +228,25 @@ class TransactionManager:
 			}
 		TransactionManager.transactions[transactionName]['locks'][key][site]['lockType'] = lockType
 		TransactionManager.doPendingOperation(transactionName, site)
+
+		# # Clear request on all other sites
+		# SM = DatabaseManager.DatabaseManager.SM
+		# key_index = int(key[1:])
+		# sites = SM.findSitesForKeyIndex(key_index)
+
+		# for keySite in sites:
+		# 	if keySite.site != site:
+		# 		SM.sites[keySite.site]['pendingOperations'] = filter(lambda pendingOperation: pendingOperation['transaction'] != transactionName, SM.sites[keySite.site]['pendingOperations'])
+
+
+		# SM.sites[site.site]['pendingOperations'].append({
+		# 			'transaction': transactionName,
+		# 			'operation': Operation.READ,
+		# 			'options': {
+		# 				'key': key
+		# 			},
+		# 			'responseRequested': True
+		# 		})
 
 	def doPendingOperation(transactionName, site):
 		SM = DatabaseManager.DatabaseManager.SM
