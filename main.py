@@ -20,7 +20,8 @@ if __name__ == '__main__':
 		if Timer.CURRENT_TIME % DEADLOCK_DETECTION_PERIOD == 0:
 			TM.detectDeadlock()
 
-		line = line.strip()
+		# line = line.strip()
+		line = ''.join(filter(lambda c: c != ' ' and c != '\t' and c != '\n' and c is not None, line))
 
 		print(line)
 
@@ -81,5 +82,14 @@ if __name__ == '__main__':
 		elif line.startswith('dump'):
 			site = line[5:-1]
 			SM.dumpSite(site)
+
+		elif line.startswith('querystate()'):
+			print('Current Time =', Timer.CURRENT_TIME)
+			TM.print()
+			SM.print()
+			pass
+
+		else:
+			print('Invalid Command')
 
 		print()
