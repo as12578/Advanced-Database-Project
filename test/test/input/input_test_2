@@ -1,8 +1,9 @@
-# Transaction Aborts
 begin(T1)
-W(T1, x1, 201)
 fail(2)
+W(T1, x1, 201)
 recover(2)
+R(T1, x3)
+W(T1, x4, 2011)
 dump()
 querystate()
 end(T1)

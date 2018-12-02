@@ -36,15 +36,11 @@ class SiteManager:
 		return list(map(lambda site_index: SiteManager.sites[str(site_index)]['site'], site_indexes))
 
 	def fail(site):
-		# TODO: Check failure Scenarios
-		# TODO: Abort transactions which hold lock to site
 		SiteManager.sites[site]['available'] = False
 		SiteManager.sites[site]['site'].LM.resetLocks()
 		TransactionManager.TransactionManager.notifySiteFailed(site)
 
 	def recover(site, time):
-		# TODO: Check recover Scenarios
-		# Aborted txns. etc.
 		SiteManager.sites[site]['available'] = True
 		SiteManager.sites[site]['startTime'] = Timer.CURRENT_TIME
 		# Recover data
@@ -74,6 +70,11 @@ class SiteManager:
 			for otherSite in SiteManager.sites.keys():
 				sitePendingOperations = SiteManager.sites[otherSite]['pendingOperations']
 				SiteManager.sites[otherSite]['pendingOperations'] = list(filter(lambda pendingOperation: pendingOperation['transaction'] != transaction, SiteManager.sites[otherSite]['pendingOperations']))
+
+			# A read only transaction needs no locks
+			if TM.transactions[transaction]['readOnly']:
+				TM.doPendingOperation(transaction, site)
+				return
 
 			lockType = LockManager.LockType.SHARED
 			if pendingOperation['operation'] == TransactionManager.Operation.WRITE:
