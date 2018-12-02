@@ -8,6 +8,15 @@ def bootstrap(DBM):
 	# Set up all objects and data in all sites
 	DBM.init(Timer.CURRENT_TIME)
 
+def printState(DBM):
+	print('\n=============================System State=============================')
+	print('Current Time =', Timer.CURRENT_TIME)
+	TM = DBM.TM
+	SM = DBM.SM
+	TM.print()
+	SM.print()
+	print('======================================================================')
+
 if __name__ == '__main__':
 	DBM = DatabaseManager.DatabaseManager
 	TM = DBM.TM
@@ -17,23 +26,27 @@ if __name__ == '__main__':
 
 	for originalLine in sys.stdin:
 		line = ''.join(filter(lambda c: c != ' ' and c != '\t' and c != '\n' and c is not None, originalLine))
-		print(originalLine)
+		print(originalLine.strip())
 
-		if len(line) == 0 or line.startswith('#'):
+		if line.startswith('#'):
 			continue
 
 
 		elif line.startswith('querystate()'):
-			print('Current Time =', Timer.CURRENT_TIME)
-			TM.print()
-			SM.print()
+			printState(DBM)
 			continue
+
+		elif line.startswith('quit'):
+			break
 
 		Timer.CURRENT_TIME = Timer.CURRENT_TIME + 1
 		if Timer.CURRENT_TIME % DEADLOCK_DETECTION_PERIOD == 0:
 			TM.detectDeadlock()
 
-		if line.startswith('beginRO'):
+		if len(line) == 0:
+			continue
+
+		elif line.startswith('beginRO'):
 			transaction = line[8:-1]
 			TM.beginTransaction(transaction, Timer.CURRENT_TIME, True)
 
@@ -93,3 +106,5 @@ if __name__ == '__main__':
 			print('Invalid Command')
 
 		print()
+
+	printState(DBM)
