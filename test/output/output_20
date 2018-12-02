@@ -1,118 +1,91 @@
-# Mix of transaction aborts and commits, with RO transactions
+# Test 20
+# From a student in 2017
 begin(T1)
 
-beginRO(T2)
+begin(T2)
 
-begin(T3)
+W(T1,x2,9)
 
-begin(T4)
+# T1 abort
+fail(1)
 
-# Get shared lock on x1 site 2
-R(T1,x1)
-T1 - x1: 10
-
-# Get exclusive lock on x1 site 2
-W(T1,x1,101)
-
-# T3 will wait for T1 on x1 site 2
-R(T3, x1)
-
-# Read value since lock already held. Read 101
-R(T1,x1)
-T1 - x1: 101
-
-# T4 will wait for T3 on x1 site 2
-R(T4, x1)
-
-# Abort T1, T3, T4 should not be aborted
-fail(2)
-
-# T2 Will use MVRC for x1. Should read 10. Will wait since site 2 is failed
-R(T2,x1)
-
-# T1 aborts
 end(T1)
 T1 aborts
 
-# T2, T3, T4 will read x1: Should read 10
-recover(2)
-T3 - x1: 10
-T4 - x1: 10
-T2 - x1: 10
+begin(T3)
 
-# T3 wil read x2: Should read 20
-W(T3, x2, 100)
+W(T3,x2,100)
 
-# T3 will wait since 2 transactions hold shared lock
-W(T3, x1, 150)
-
-# T4 commits, T3 will write
-end(T4)
-T4 commits
-
-# T3 will read 150
-R(T3, x1)
-T3 - x1: 150
-
-# T3 commits
 end(T3)
 T3 commits
 
-dump(x1)
-Site 2 - x1: 150
+recover(1)
 
-dump(x2)
-Site 1 - x2: 100
-Site 2 - x2: 100
-Site 3 - x2: 100
-Site 4 - x2: 100
-Site 5 - x2: 100
-Site 6 - x2: 100
-Site 7 - x2: 100
-Site 8 - x2: 100
-Site 9 - x2: 100
-Site 10 - x2: 100
+fail(2)
 
-# T2 will read 20
-R(T2, x2)
+fail(3)
+
+fail(4)
+
+fail(5)
+
+fail(6)
+
+fail(7)
+
+fail(8)
+
+fail(9)
+
+fail(10)
+
+# T2 can't read x2 from site 1,
+R(T2,x2)
 T2 - x2: 20
 
-# T2 commits
-end(T2)
-T2 commits
+# but doesn't hold a lock on x2 at site 1
+begin(T5)
 
-dump(x1)
-Site 2 - x1: 150
+# T5 doesn't need to wait because T2 doesn't acquire a lock
+W(T5,x2,90)
 
-dump(x2)
-Site 1 - x2: 100
-Site 2 - x2: 100
-Site 3 - x2: 100
-Site 4 - x2: 100
-Site 5 - x2: 100
-Site 6 - x2: 100
-Site 7 - x2: 100
-Site 8 - x2: 100
-Site 9 - x2: 100
-Site 10 - x2: 100
-
+# since site 1 can't respond to the read.
 
 =============================System State=============================
-Current Time = 24
+Current Time = 21
 
 =========================Current Transactions=========================
+Transaction: T2
+Read Only: False
+Start Time: 2
+Aborted: False
+Locks:
+	x2: 1:SHARED:19
+Pending Operation: 
+
+Transaction: T5
+Read Only: False
+Start Time: 20
+Aborted: False
+Locks:
+	x2: 
+Pending Operation: 
+Write x2: 90
+Pending Sites: [<Site.Site object at 0x7f75a690be48>] 
+Written Sites: []
+
 ======================================================================
 
 ============================All Site State============================
 Site: 1
-Start Time: 0
+Start Time: 9
 Available: True
 Granted Locks:
-	
+	x2: T2:SHARED
 Waiting Locks:
-	
+	x2: T5:EXCLUSIVE
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -124,15 +97,15 @@ All Data:
 	x20: :200:0
 
 Site: 2
-Start Time: 13
-Available: True
+Start Time: 0
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x1: :10:0 T3:150:18
-	x2: :20:0 T3:100:18
+	x1: :10:0
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -146,13 +119,13 @@ All Data:
 
 Site: 3
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -165,13 +138,13 @@ All Data:
 
 Site: 4
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -186,13 +159,13 @@ All Data:
 
 Site: 5
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -205,13 +178,13 @@ All Data:
 
 Site: 6
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x5: :50:0
 	x6: :60:0
@@ -226,13 +199,13 @@ All Data:
 
 Site: 7
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -245,13 +218,13 @@ All Data:
 
 Site: 8
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -266,13 +239,13 @@ All Data:
 
 Site: 9
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -285,13 +258,13 @@ All Data:
 
 Site: 10
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T3:100:8
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0

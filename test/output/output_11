@@ -1,104 +1,26 @@
-# Mix of transaction aborts and commits, with RO transactions
+# Test 11
+# All should commit
 begin(T1)
 
-beginRO(T2)
+begin(T2)
 
-begin(T3)
+R(T1,x2)
+T1 - x2: 20
 
-begin(T4)
-
-# Get shared lock on x1 site 2
-R(T1,x1)
-T1 - x1: 10
-
-# Get exclusive lock on x1 site 2
-W(T1,x1,101)
-
-# T3 will wait for T1 on x1 site 2
-R(T3, x1)
-
-# Read value since lock already held. Read 101
-R(T1,x1)
-T1 - x1: 101
-
-# T4 will wait for T3 on x1 site 2
-R(T4, x1)
-
-# Abort T1, T3, T4 should not be aborted
-fail(2)
-
-# T2 Will use MVRC for x1. Should read 10. Will wait since site 2 is failed
-R(T2,x1)
-
-# T1 aborts
-end(T1)
-T1 aborts
-
-# T2, T3, T4 will read x1: Should read 10
-recover(2)
-T3 - x1: 10
-T4 - x1: 10
-T2 - x1: 10
-
-# T3 wil read x2: Should read 20
-W(T3, x2, 100)
-
-# T3 will wait since 2 transactions hold shared lock
-W(T3, x1, 150)
-
-# T4 commits, T3 will write
-end(T4)
-T4 commits
-
-# T3 will read 150
-R(T3, x1)
-T3 - x1: 150
-
-# T3 commits
-end(T3)
-T3 commits
-
-dump(x1)
-Site 2 - x1: 150
-
-dump(x2)
-Site 1 - x2: 100
-Site 2 - x2: 100
-Site 3 - x2: 100
-Site 4 - x2: 100
-Site 5 - x2: 100
-Site 6 - x2: 100
-Site 7 - x2: 100
-Site 8 - x2: 100
-Site 9 - x2: 100
-Site 10 - x2: 100
-
-# T2 will read 20
-R(T2, x2)
+R(T2,x2)
 T2 - x2: 20
 
-# T2 commits
+W(T2,x2,10)
+
+end(T1)
+T1 commits
+
 end(T2)
 T2 commits
 
-dump(x1)
-Site 2 - x1: 150
-
-dump(x2)
-Site 1 - x2: 100
-Site 2 - x2: 100
-Site 3 - x2: 100
-Site 4 - x2: 100
-Site 5 - x2: 100
-Site 6 - x2: 100
-Site 7 - x2: 100
-Site 8 - x2: 100
-Site 9 - x2: 100
-Site 10 - x2: 100
-
 
 =============================System State=============================
-Current Time = 24
+Current Time = 7
 
 =========================Current Transactions=========================
 ======================================================================
@@ -112,7 +34,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0 T2:10:7
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -124,15 +46,15 @@ All Data:
 	x20: :200:0
 
 Site: 2
-Start Time: 13
+Start Time: 0
 Available: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x1: :10:0 T3:150:18
-	x2: :20:0 T3:100:18
+	x1: :10:0
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -152,7 +74,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -171,7 +93,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -192,7 +114,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -211,7 +133,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0
 	x4: :40:0
 	x5: :50:0
 	x6: :60:0
@@ -232,7 +154,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -251,7 +173,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -272,7 +194,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -291,7 +213,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T3:100:18
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
