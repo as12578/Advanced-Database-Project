@@ -1,19 +1,27 @@
+# No fail/recover/abort
 begin(T1)
 beginRO(T2)
 begin(T3)
 begin(T4)
+# Read x1 = 10
 R(T1,x1)
+# Write x1 = 101
 W(T1,x1,101)
 # T3 will wait for T1 on x1
 R(T3, x1) 
+# Read 101
 R(T1,x1)
+# Wait for T3 on x1
 R(T4, x1)
+# Write x2 = 102
 W(T1,x2,102) 
+# Read 102
 R(T1,x2)
 # T2 Will use MVRC for x1. Should read 10
 R(T2,x1)
+# Committed value still 20
 dump(x2)
-# T3, T4 wil read x1: Should read 101
+# T1 commits. T3, T4 wil read x1: Should read 101
 end(T1)
 # T2 Will use MVRC for x1. Should read 10
 R(T2,x1)
@@ -21,10 +29,14 @@ R(T2,x1)
 R(T3, x2)
 # T3 will wait since 2 transactions hold shared lock
 W(T3, x1, 150)
-# T3 will write
+# T4 commits. T3 will write
 end(T4)
 # T3 will read 150
 R(T3, x1)
+# T3 commits
+end(T3)
+# T2 commits
+end(T2)
 dump()
 dump(x1)
 dump(x2)

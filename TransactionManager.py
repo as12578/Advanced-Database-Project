@@ -31,6 +31,11 @@ class TransactionManager:
 		if not TransactionManager.shouldTransactionAbort(transactionName):
 			commitValues = True
 
+		if commitValues:
+			print('%s commits'%transactionName)
+		else:
+			print('%s aborts'%transactionName)
+
 		transactionLocks = TransactionManager.transactions[transactionName]['locks']
 		for key in transactionLocks.keys():
 			commitData = commitValues
@@ -46,11 +51,6 @@ class TransactionManager:
 					site.DM.abortTransactionKey(transactionName, key, endTime)
 
 				site.LM.releaseLock(transactionName, key)
-
-		if commitValues:
-			print('%s commits'%transactionName)
-		else:
-			print('%s aborts'%transactionName)
 
 		del TransactionManager.transactions[transactionName]
 
