@@ -15,20 +15,25 @@ if __name__ == '__main__':
 
 	bootstrap(DBM)
 
-	for line in sys.stdin:
-		Timer.CURRENT_TIME = Timer.CURRENT_TIME + 1
-		if Timer.CURRENT_TIME % DEADLOCK_DETECTION_PERIOD == 0:
-			TM.detectDeadlock()
-
-		# line = line.strip()
-		line = ''.join(filter(lambda c: c != ' ' and c != '\t' and c != '\n' and c is not None, line))
-
-		print(line)
+	for originalLine in sys.stdin:
+		line = ''.join(filter(lambda c: c != ' ' and c != '\t' and c != '\n' and c is not None, originalLine))
+		print(originalLine)
 
 		if len(line) == 0 or line.startswith('#'):
 			continue
 
-		elif line.startswith('beginRO'):
+
+		elif line.startswith('querystate()'):
+			print('Current Time =', Timer.CURRENT_TIME)
+			TM.print()
+			SM.print()
+			continue
+
+		Timer.CURRENT_TIME = Timer.CURRENT_TIME + 1
+		if Timer.CURRENT_TIME % DEADLOCK_DETECTION_PERIOD == 0:
+			TM.detectDeadlock()
+
+		if line.startswith('beginRO'):
 			transaction = line[8:-1]
 			TM.beginTransaction(transaction, Timer.CURRENT_TIME, True)
 
@@ -83,13 +88,8 @@ if __name__ == '__main__':
 			site = line[5:-1]
 			SM.dumpSite(site)
 
-		elif line.startswith('querystate()'):
-			print('Current Time =', Timer.CURRENT_TIME)
-			TM.print()
-			SM.print()
-			pass
-
 		else:
+			Timer.CURRENT_TIME -= 1
 			print('Invalid Command')
 
 		print()

@@ -1,4 +1,3 @@
-# Mix of transaction aborts and commits, with RO transactions
 begin(T1)
 beginRO(T2)
 begin(T3)
@@ -9,33 +8,34 @@ R(T1,x1)
 W(T1,x1,101)
 # T3 will wait for T1 on x1 site 2
 R(T3, x1) 
-# Read value since lock already held. Read 101
+# Read value since lock held
 R(T1,x1)
 # T4 will wait for T3 on x1 site 2
 R(T4, x1)
-# Abort T1, T3, T4 should not be aborted
+# Abort T1. T3/T4? Other sites? Or abort?
 fail(2)
+# No action since T1 aborted
+W(T1,x2,102) 
+# No action since T1 aborted
+R(T1,x2)
 # T2 Will use MVRC for x1. Should read 10. Will wait since site 2 is failed
 R(T2,x1)
-# T1 aborts
+# Will print committed values only
+dump(x2)
+# T3, T4 wil read x1: Should read 101
 end(T1)
-# T2, T3, T4 will read x1: Should read 10
-recover(2)
-# T3 wil read x2: Should read 20
-W(T3, x2, 100)
+# T3 wil read x2: Should read 102
+R(T3, x2)
 # T3 will wait since 2 transactions hold shared lock
 W(T3, x1, 150)
-# T4 commits, T3 will write
+# T3 will write
 end(T4)
 # T3 will read 150
 R(T3, x1)
-# T3 commits
-end(T3)
+recover(2)
+dump()
 dump(x1)
 dump(x2)
-# T2 will read 20
-R(T2, x2)
-# T2 commits
-end(T2)
-dump(x1)
-dump(x2)
+dump(5)
+# fail(6)
+# recover(6)
