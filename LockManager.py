@@ -21,6 +21,13 @@ class LockManager:
 			self.waitingLocks[key] = []
 
 	def requestLock(self, transaction, key, lockType):
+		SM = DatabaseManager.DatabaseManager.SM
+		if not SM.sites[self.site]['stable'] and lockType == LockType.SHARED:
+			DatabaseManager.DatabaseManager.TM.rejectLock(transaction, self.site)
+			return
+		elif not SM.sites[self.site]['stable']:
+			SM.recoverSiteData(self.site)
+
 		if len(self.grantedLocks[key]) == 0:
 			self.grantedLocks[key].append({
 				'type': lockType,
@@ -41,6 +48,10 @@ class LockManager:
 				'type': lockType,
 				'transaction': transaction
 			})
+
+		if not SM.sites[self.site]['stable']:
+			SM.sites[self.site]['stable'] = True
+			SM.doPendingOperations(self.site)
 
 	def releaseLock(self, transaction, key):
 		self.grantedLocks[key] = list(filter(lambda lock: lock['transaction'] != transaction, self.grantedLocks[key]))

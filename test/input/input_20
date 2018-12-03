@@ -26,3 +26,5 @@ begin(T5)
 # T5 doesn't need to wait because T2 doesn't acquire a lock
 W(T5,x2,90)
 # since site 1 can't respond to the read.
+# T2 should read x2 now
+end(T5)

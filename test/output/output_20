@@ -41,7 +41,6 @@ fail(10)
 
 # T2 can't read x2 from site 1,
 R(T2,x2)
-T2 - x2: 20
 
 # but doesn't hold a lock on x2 at site 1
 begin(T5)
@@ -50,9 +49,14 @@ begin(T5)
 W(T5,x2,90)
 
 # since site 1 can't respond to the read.
+# T2 should read x2 now
+end(T5)
+T5 commits
+T2 - x2: 90
+
 
 =============================System State=============================
-Current Time = 21
+Current Time = 22
 
 =========================Current Transactions=========================
 Transaction: T2
@@ -60,19 +64,8 @@ Read Only: False
 Start Time: 2
 Aborted: False
 Locks:
-	x2: 1:SHARED:19
+	x2: 1:SHARED:22
 Pending Operation: 
-
-Transaction: T5
-Read Only: False
-Start Time: 20
-Aborted: False
-Locks:
-	x2: 
-Pending Operation: 
-Write x2: 90
-Pending Sites: [<Site.Site object at 0x7f75a690be48>] 
-Written Sites: []
 
 ======================================================================
 
@@ -80,12 +73,13 @@ Written Sites: []
 Site: 1
 Start Time: 9
 Available: True
+Stable: True
 Granted Locks:
 	x2: T2:SHARED
 Waiting Locks:
-	x2: T5:EXCLUSIVE
+	
 All Data:
-	x2: :20:0 T3:100:8
+	x2: :20:0 T5:90:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -95,10 +89,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -116,10 +112,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -135,10 +133,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -156,10 +156,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -175,10 +177,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -196,10 +200,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -215,10 +221,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -236,10 +244,12 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -255,10 +265,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: False
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -276,6 +288,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================

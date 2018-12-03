@@ -41,16 +41,22 @@ class TransactionManager:
 			commitData = commitValues
 			for site in transactionLocks[key].keys():
 				commitData = commitData and 'lockType' in transactionLocks[key][site] and transactionLocks[key][site]['lockType'] == LockType.EXCLUSIVE
-
-			key_index = int(key[1:])
-			sites = SM.findSitesForKeyIndex(key_index)
-			for site in sites:
 				if commitData:
-					site.DM.commitTransactionKey(transactionName, key, endTime)
+					SM.sites[site]['site'].DM.commitTransactionKey(transactionName, key, endTime)
 				else:
-					site.DM.abortTransactionKey(transactionName, key, endTime)
+					SM.sites[site]['site'].DM.abortTransactionKey(transactionName, key, endTime)
 
-				site.LM.releaseLock(transactionName, key)
+				SM.sites[site]['site'].LM.releaseLock(transactionName, key)
+
+			# key_index = int(key[1:])
+			# sites = SM.findSitesForKeyIndex(key_index)
+			# for site in sites:
+			# 	if commitData:
+			# 		site.DM.commitTransactionKey(transactionName, key, endTime)
+			# 	else:
+			# 		site.DM.abortTransactionKey(transactionName, key, endTime)
+
+			# 	site.LM.releaseLock(transactionName, key)
 
 		del TransactionManager.transactions[transactionName]
 
@@ -76,7 +82,8 @@ class TransactionManager:
 		if pendingOperation['operation'] == Operation.READ:
 			return 'Read %s'%operationOptions['key']
 
-		return '\nWrite %s: %s\nPending Sites: %s \nWritten Sites: %s'%(operationOptions['key'], operationOptions['value'], operationOptions['pendingSites'], operationOptions['writtenSites'])
+		pendingSites = list(map(lambda site: site.site, operationOptions['pendingSites']))
+		return '\nWrite %s: %s\nPending Sites: %s \nWritten Sites: %s'%(operationOptions['key'], operationOptions['value'], pendingSites, operationOptions['writtenSites'])
 
 	def print():
 		print('\n=========================Current Transactions=========================')
@@ -147,15 +154,14 @@ class TransactionManager:
 			elif key in TransactionManager.transactions[transactionName]['locks'] and site.site in TransactionManager.transactions[transactionName]['locks'][key] and 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site]:
 				# Already have a lock. Continue to read from site
 				TransactionManager.doPendingOperation(transactionName, site.site)
-				# TODO: Should we cancel lock requests on other sites?
 				break
 			else:
 				TransactionManager.transactions[transactionName]['locks'][key][site.site] = {}
 				site.LM.requestLock(transactionName, key, LockType.SHARED)
-				# Check if operation done. Check if lock granted. since we are doing everything sequentially
-				if key in TransactionManager.transactions[transactionName]['locks'] and site.site in TransactionManager.transactions[transactionName]['locks'][key] and 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site]:
-					# TODO: Should we cancel lock requests on other sites?
-					pass
+				# # Check if operation done. Check if lock granted. since we are doing everything sequentially
+				# if key in TransactionManager.transactions[transactionName]['locks'] and site.site in TransactionManager.transactions[transactionName]['locks'][key] and 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site]:
+				# 	# TODO: Anything to do here?
+				# 	pass
 				break
 
 		# If all sites have failed
@@ -164,7 +170,7 @@ class TransactionManager:
 				if key not in TransactionManager.transactions[transactionName]['locks']:
 					TransactionManager.transactions[transactionName]['locks'][key] = {}
 				TransactionManager.transactions[transactionName]['locks'][key][site.site] = {}
-				SM.sites[site.site]['pendingOperations'].append(TransactionManager.getSitePendingOperationFromTransaction(transactionName))
+				SM.sites[site.site]['pendingOperations'].append(TransactionManager._getSitePendingOperationFromTransaction(transactionName))
 
 	def writeValue(transactionName, key, value):
 		# Write to all available copies
@@ -208,7 +214,7 @@ class TransactionManager:
 				if key not in TransactionManager.transactions[transactionName]['locks']:
 					TransactionManager.transactions[transactionName]['locks'][key] = {}
 				TransactionManager.transactions[transactionName]['locks'][key][site.site] = {}
-				SM.sites[site.site]['pendingOperations'].append(TransactionManager.getSitePendingOperationFromTransaction(transactionName))
+				SM.sites[site.site]['pendingOperations'].append(TransactionManager._getSitePendingOperationFromTransaction(transactionName))
 
 	def grantLock(transactionName, site, lockType):
 		pendingOperation = TransactionManager.transactions[transactionName]['pendingOperation']
@@ -220,6 +226,11 @@ class TransactionManager:
 			}
 		TransactionManager.transactions[transactionName]['locks'][key][site]['lockType'] = lockType
 		TransactionManager.doPendingOperation(transactionName, site)
+
+	def rejectLock(transactionName, site):
+		# Lock rejection when site just recovered and is waiting for a write
+		SM = DatabaseManager.DatabaseManager.SM
+		SM.sites[site]['pendingOperations'].append(TransactionManager._getSitePendingOperationFromTransaction(transactionName))
 
 	def doPendingOperation(transactionName, site):
 		SM = DatabaseManager.DatabaseManager.SM
@@ -262,7 +273,7 @@ class TransactionManager:
 						if key not in TransactionManager.transactions[transaction]['locks']:
 							TransactionManager.transactions[transaction]['locks'][key][site.site] = {}
 
-						SM.sites[site]['pendingOperations'].append(TransactionManager.getSitePendingOperationFromTransaction(transaction))
+						SM.sites[site]['pendingOperations'].append(TransactionManager._getSitePendingOperationFromTransaction(transaction))
 
 				if transactionFailed:
 					break
@@ -273,7 +284,7 @@ class TransactionManager:
 					'options': {}
 				}
 
-	def getSitePendingOperationFromTransaction(transaction):
+	def _getSitePendingOperationFromTransaction(transaction):
 		transactionPendingOperation = TransactionManager.transactions[transaction]['pendingOperation']
 		pendingOperation = {
 			'transaction': transaction,

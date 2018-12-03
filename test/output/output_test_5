@@ -49,7 +49,7 @@ Locks:
 	x2: 2:EXCLUSIVE:13   3:EXCLUSIVE:13   4:EXCLUSIVE:13   5:EXCLUSIVE:13   6:EXCLUSIVE:13   7:EXCLUSIVE:13   8:EXCLUSIVE:13   9:EXCLUSIVE:13   10:EXCLUSIVE:13
 Pending Operation: 
 Write x2: 10
-Pending Sites: [<Site.Site object at 0x7f2d597dbe10>] 
+Pending Sites: ['1'] 
 Written Sites: ['2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 Transaction: T2
@@ -90,6 +90,7 @@ Pending Operation:
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T2:SHARED
 	x4: T4:SHARED
@@ -107,10 +108,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -128,10 +131,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -147,10 +152,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -168,10 +175,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -187,10 +196,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x5: T5:SHARED
@@ -209,10 +220,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -228,10 +241,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -249,10 +264,12 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -268,10 +285,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -289,6 +308,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================
@@ -309,7 +329,7 @@ Locks:
 	x2: 2:EXCLUSIVE:13   3:EXCLUSIVE:13   4:EXCLUSIVE:13   5:EXCLUSIVE:13   6:EXCLUSIVE:13   7:EXCLUSIVE:13   8:EXCLUSIVE:13   9:EXCLUSIVE:13   10:EXCLUSIVE:13
 Pending Operation: 
 Write x2: 10
-Pending Sites: [<Site.Site object at 0x7f2d597dbe10>] 
+Pending Sites: ['1'] 
 Written Sites: ['2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 Transaction: T2
@@ -351,6 +371,7 @@ Pending Operation:
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T2:SHARED
 	x4: T4:SHARED
@@ -368,10 +389,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -389,10 +412,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -408,10 +433,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x3: T2:EXCLUSIVE
@@ -430,10 +457,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -449,10 +478,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x5: T5:SHARED
@@ -471,10 +502,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -490,10 +523,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -511,10 +546,12 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -530,10 +567,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -551,6 +590,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================
@@ -571,7 +611,7 @@ Locks:
 	x2: 2:EXCLUSIVE:13   3:EXCLUSIVE:13   4:EXCLUSIVE:13   5:EXCLUSIVE:13   6:EXCLUSIVE:13   7:EXCLUSIVE:13   8:EXCLUSIVE:13   9:EXCLUSIVE:13   10:EXCLUSIVE:13
 Pending Operation: 
 Write x2: 10
-Pending Sites: [<Site.Site object at 0x7f2d597dbe10>] 
+Pending Sites: ['1'] 
 Written Sites: ['2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 Transaction: T2
@@ -613,6 +653,7 @@ Pending Operation:
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T2:SHARED
 	x4: T4:SHARED
@@ -630,10 +671,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -651,10 +694,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -670,10 +715,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x3: T2:EXCLUSIVE
@@ -692,10 +739,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -711,10 +760,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x5: T5:SHARED
@@ -733,10 +784,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -752,10 +805,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -773,10 +828,12 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -792,10 +849,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -813,6 +872,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================
@@ -833,7 +893,7 @@ Locks:
 	x2: 2:EXCLUSIVE:13   3:EXCLUSIVE:13   4:EXCLUSIVE:13   5:EXCLUSIVE:13   6:EXCLUSIVE:13   7:EXCLUSIVE:13   8:EXCLUSIVE:13   9:EXCLUSIVE:13   10:EXCLUSIVE:13
 Pending Operation: 
 Write x2: 10
-Pending Sites: [<Site.Site object at 0x7f2d597dbe10>] 
+Pending Sites: ['1'] 
 Written Sites: ['2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 Transaction: T2
@@ -876,6 +936,7 @@ Pending Operation:
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T2:SHARED
 	x4: T4:SHARED
@@ -893,10 +954,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x1: T5:EXCLUSIVE
 	x2: T1:EXCLUSIVE
@@ -915,10 +978,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -934,10 +999,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x3: T2:EXCLUSIVE
@@ -956,10 +1023,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -975,10 +1044,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x5: T5:SHARED
@@ -997,10 +1068,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1016,10 +1089,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1037,10 +1112,12 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1056,10 +1133,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1077,6 +1156,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================
@@ -1100,7 +1180,7 @@ Locks:
 	x2: 2:EXCLUSIVE:13   3:EXCLUSIVE:13   4:EXCLUSIVE:13   5:EXCLUSIVE:13   6:EXCLUSIVE:13   7:EXCLUSIVE:13   8:EXCLUSIVE:13   9:EXCLUSIVE:13   10:EXCLUSIVE:13
 Pending Operation: 
 Write x2: 10
-Pending Sites: [<Site.Site object at 0x7f2d597dbe10>] 
+Pending Sites: ['1'] 
 Written Sites: ['2', '3', '4', '5', '6', '7', '8', '9', '10']
 
 Transaction: T2
@@ -1135,6 +1215,7 @@ Pending Operation:
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T2:SHARED
 	x4: T4:SHARED
@@ -1152,10 +1233,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1173,10 +1256,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1192,10 +1277,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x3: T2:EXCLUSIVE
@@ -1214,10 +1301,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1233,10 +1322,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x5: T4:EXCLUSIVE
@@ -1255,10 +1346,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1274,10 +1367,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1295,10 +1390,12 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1314,10 +1411,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
@@ -1335,6 +1434,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================
@@ -1368,6 +1468,7 @@ Pending Operation:
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 	x6: T1:SHARED
@@ -1384,17 +1485,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
 	x1: :10:0 T5:50:17
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1405,16 +1508,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1424,16 +1529,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -1445,16 +1552,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1464,16 +1573,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x4: :40:0
 	x5: :50:0 T4:40:19
 	x6: :60:0
@@ -1485,16 +1596,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1504,16 +1617,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -1525,16 +1640,18 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1544,16 +1661,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	x2: T1:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:-1
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1565,6 +1684,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================
@@ -1582,6 +1702,7 @@ Current Time = 22
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -1597,17 +1718,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
 	x1: :10:0 T5:50:17
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1618,16 +1741,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1637,16 +1762,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -1658,16 +1785,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1677,16 +1806,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x5: :50:0 T4:40:19
 	x6: :60:0
@@ -1698,16 +1829,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1717,16 +1850,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -1738,16 +1873,18 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1757,16 +1894,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -1778,6 +1917,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================
