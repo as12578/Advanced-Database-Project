@@ -36,8 +36,10 @@ if __name__ == '__main__':
 			printState(DBM)
 			continue
 
+
 		elif line.startswith('quit'):
 			break
+
 
 		Timer.CURRENT_TIME = Timer.CURRENT_TIME + 1
 		if Timer.CURRENT_TIME % DEADLOCK_DETECTION_PERIOD == 0:
@@ -45,6 +47,7 @@ if __name__ == '__main__':
 
 		if len(line) == 0:
 			continue
+
 
 		elif line.startswith('beginRO'):
 			transaction = line[8:-1]

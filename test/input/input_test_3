@@ -2,13 +2,24 @@
 begin(T1)
 begin(T2)
 fail(2)
+# Will write to all sites except 2
 W(T2, x2, 1010)
+# Will wait for site 2 to recover
 W(T1, x1, 2)
 querystate()
+# Should not let T1 proceed yet
 recover(2)
 querystate()
-W(T1, x1, 5)
+# Should not allow T2 to read x1 yet
+R(T2, x1)
 querystate()
-end(T2)
+begin(T3)
+# Write x1
+W(T3, x1, 5)
+querystate()
+# Now let T1 write x1 = 2
+end(T3)
+querystate()
+# Now let T2 read x1 = 2
 end(T1)
-querystate()
+end(T2)

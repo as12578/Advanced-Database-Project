@@ -25,7 +25,6 @@ recover(4)
 recover(3)
 
 R(T2,x3)
-T2 - x3: 30
 
 end(T2)
 T2 commits
@@ -33,8 +32,8 @@ T2 commits
 dump()
 Site 1 - x2: 20 x4: 40 x6: 60 x8: 88 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
 Site 2 - x1: 10 x2: 20 x4: 40 x6: 60 x8: 88 x10: 100 x11: 110 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
-Site 3 - x2: 20 x4: 40 x6: 60 x8: 88 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
-Site 4 - x2: 20 x3: 30 x4: 40 x6: 60 x8: 88 x10: 100 x12: 120 x13: 130 x14: 140 x16: 160 x18: 180 x20: 200
+Site 3 - x2: 20 x4: 40 x6: 60 x8: 80 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
+Site 4 - x2: 20 x3: 30 x4: 40 x6: 60 x8: 80 x10: 100 x12: 120 x13: 130 x14: 140 x16: 160 x18: 180 x20: 200
 Site 5 - x2: 20 x4: 40 x6: 60 x8: 88 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
 Site 6 - x2: 20 x4: 40 x5: 50 x6: 60 x8: 88 x10: 100 x12: 120 x14: 140 x15: 150 x16: 160 x18: 180 x20: 200
 Site 7 - x2: 20 x4: 40 x6: 60 x8: 88 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
@@ -53,6 +52,7 @@ Current Time = 12
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -68,10 +68,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -89,10 +91,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 9
 Available: True
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -101,17 +105,19 @@ All Data:
 	x2: :20:0
 	x4: :40:0
 	x6: :60:0
-	x8: :80:0 T2:88:11
+	x8: :80:0
 	x10: :100:0
 	x12: :120:0
 	x14: :140:0
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -121,7 +127,7 @@ All Data:
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
-	x8: :80:0 T2:88:11
+	x8: :80:0
 	x10: :100:0
 	x12: :120:0
 	x13: :130:0
@@ -129,10 +135,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: T2: Read x3
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -148,10 +156,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -169,10 +179,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -188,10 +200,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -209,10 +223,12 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -228,10 +244,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -249,6 +267,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================

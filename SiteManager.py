@@ -14,7 +14,8 @@ class SiteManager:
 				'site': Site.Site(str(i)),
 				'available': True,
 				'pendingOperations': [],
-				'startTime': startTime
+				'startTime': startTime,
+				'stable': True
 			}
 
 		for key_index in range(1, NUM_KEYS + 1):
@@ -37,23 +38,13 @@ class SiteManager:
 
 	def fail(site):
 		SiteManager.sites[site]['available'] = False
+		SiteManager.sites[site]['stable'] = False
 		SiteManager.sites[site]['site'].LM.resetLocks()
 		TransactionManager.TransactionManager.notifySiteFailed(site)
 
 	def recover(site, time):
 		SiteManager.sites[site]['available'] = True
 		SiteManager.sites[site]['startTime'] = Timer.CURRENT_TIME
-		# Recover data
-		for key in SiteManager.sites[site]['site'].DM.data.keys():
-			key_index = int(key[1:])
-			sites = SiteManager.findSitesForKeyIndex(key_index)
-			for copySite in sites:
-				if SiteManager.sites[str(copySite.site)]['available'] and copySite.site != site:
-					# Copy data
-					SiteManager.sites[site]['site'].DM.data[key] = copySite.DM.data[key][:]# list(filter(lambda data: data['committedTime'] != -1, copySite.DM.data[key]))
-					break
-
-		SiteManager.doPendingOperations(site)
 
 	def querySiteState(site):
 		return SiteManager.sites[site]['state']
@@ -66,7 +57,7 @@ class SiteManager:
 		for pendingOperation in SiteManager.sites[site]['pendingOperations']:
 			transaction = pendingOperation['transaction']
 
-			# Delete pending operations at all other sites for transaction
+			# Delete pending operations at all other sites for transaction. Because if a transaction is waiting on multiple sites, it is waiting for the first site to succeed.
 			for otherSite in SiteManager.sites.keys():
 				sitePendingOperations = SiteManager.sites[otherSite]['pendingOperations']
 				SiteManager.sites[otherSite]['pendingOperations'] = list(filter(lambda pendingOperation: pendingOperation['transaction'] != transaction, SiteManager.sites[otherSite]['pendingOperations']))
@@ -89,6 +80,30 @@ class SiteManager:
 			print('Site:', site)
 			print('Start Time:', SiteManager.sites[site]['startTime'])
 			print('Available:', SiteManager.sites[site]['available'])
+			print('Stable:', SiteManager.sites[site]['stable'])
 			SiteManager.sites[site]['site'].print()
+			print('Pending Operations:', '\n'.join(list(map(SiteManager._pendingOperationToString, SiteManager.sites[site]['pendingOperations']))))
 			print()
 		print('======================================================================')
+
+	def _pendingOperationToString(pendingOperation):
+		operationOptions = pendingOperation['options']
+
+		if pendingOperation['operation'] == TransactionManager.Operation.NONE:
+			return ''
+
+		if pendingOperation['operation'] == TransactionManager.Operation.READ:
+			return '%s: Read %s'%(pendingOperation['transaction'], operationOptions['key'])
+
+		return '\n%s: Write %s: %s'%(pendingOperation['transaction'], operationOptions['key'], operationOptions['value'])
+
+	def recoverSiteData(site):
+		# Recover data
+		for key in SiteManager.sites[site]['site'].DM.data.keys():
+			key_index = int(key[1:])
+			sites = SiteManager.findSitesForKeyIndex(key_index)
+			for copySite in sites:
+				if SiteManager.sites[str(copySite.site)]['available'] and copySite.site != site:
+					# Copy data
+					SiteManager.sites[site]['site'].DM.data[key] = copySite.DM.data[key][:]# list(filter(lambda data: data['committedTime'] != -1, copySite.DM.data[key]))
+					break

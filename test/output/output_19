@@ -68,6 +68,7 @@ Current Time = 22
 Site: 1
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -83,17 +84,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 2
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
 	x1: :10:0 T5:50:17
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -104,16 +107,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 3
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -123,16 +128,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 4
 Start Time: 8
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -144,16 +151,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 5
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -163,16 +172,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 6
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x5: :50:0 T4:40:19
 	x6: :60:0
@@ -184,16 +195,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 7
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -203,16 +216,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 8
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -224,16 +239,18 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 9
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -243,16 +260,18 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
+Pending Operations: 
 
 Site: 10
 Start Time: 0
 Available: True
+Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0
+	x2: :20:0 T1:10:22
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -264,6 +283,7 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
+Pending Operations: 
 
 ======================================================================
 ======================================================================
