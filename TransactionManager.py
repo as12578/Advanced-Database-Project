@@ -2,6 +2,7 @@ from enum import Enum
 import DatabaseManager
 from LockManager import LockType
 import Timer
+from collections import defaultdict
 
 class Operation(Enum):
 	READ = 1
@@ -93,9 +94,46 @@ class TransactionManager:
 
 		print('======================================================================')
 
+	def dfs_visit(G, u, color, found_cycle):
+		if found_cycle[0]:                          # - Stop dfs if cycle is found.
+			return
+		color[u] = "gray"    
+													# - Gray nodes are in the current path
+		for v in G[u]:                              # - Check neighbors, where G[u] is the adjacency list of u.
+			if v.isspace() != True:
+				if color[v] == "gray":                  # - Case where a loop in the current path is present.  
+					found_cycle[0] = True       
+					return
+				if color[v] == "white":                 # - Call dfs_visit recursively.   
+					TransactionManager.dfs_visit(G, v, color, found_cycle)
+		color[u] = "black"
+
+	def cycle_exists(G):                          # - G is a directed graph
+		color = { u : "white" for u in G  }      # - All nodes are initially white
+		found_cycle = [False]                    # - Define found_cycle as a list
+										 
+		for u in G:                              # - Visit all nodes
+		   if color[u] == "white":
+			   TransactionManager.dfs_visit(G, u, color, found_cycle)
+		   if found_cycle[0]:
+			   break
+		return found_cycle[0]
+
 	def detectDeadlock():
-		# TODO: Deadlock cycle detection
-		pass
+		graph = defaultdict(list)
+		for transaction in TransactionManager.transactions:
+			graph[transaction].append(' ')
+			for key in TransactionManager.transactions[transaction]['locks']:
+				for site in TransactionManager.transactions[transaction]['locks'][key]:
+					resource = str(key) + '.' + str(site)
+					if 'firstGrant' in TransactionManager.transactions[transaction]['locks'][key][site]:
+						graph[resource].append(transaction)
+					else:
+						graph[transaction].append(resource)
+						graph[resource].append(' ')
+		print("Cycle?", TransactionManager.cycle_exists(graph))
+
+							   
 
 	def readValue(transactionName, key):
 		# Read from one site
