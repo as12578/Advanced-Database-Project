@@ -38,26 +38,18 @@ class TransactionManager:
 			print('%s aborts'%transactionName)
 
 		transactionLocks = TransactionManager.transactions[transactionName]['locks']
-		for key in transactionLocks.keys():
+		for key in transactionLocks:
 			commitData = commitValues
-			for site in transactionLocks[key].keys():
+			for site in transactionLocks[key]:
 				commitData = commitData and 'lockType' in transactionLocks[key][site] and transactionLocks[key][site]['lockType'] == LockType.EXCLUSIVE
+
+			for site in transactionLocks[key]:
 				if commitData:
-					SM.sites[site]['site'].DM.commitTransactionKey(transactionName, key, endTime)
+					SM.sites[site]['site'].DM.persistTransactionKey(transactionName, key, endTime)
 				else:
-					SM.sites[site]['site'].DM.abortTransactionKey(transactionName, key, endTime)
+					SM.sites[site]['site'].DM.revertKey(key)
 
-				SM.sites[site]['site'].LM.releaseLock(transactionName, key)
-
-			# key_index = int(key[1:])
-			# sites = SM.findSitesForKeyIndex(key_index)
-			# for site in sites:
-			# 	if commitData:
-			# 		site.DM.commitTransactionKey(transactionName, key, endTime)
-			# 	else:
-			# 		site.DM.abortTransactionKey(transactionName, key, endTime)
-
-			# 	site.LM.releaseLock(transactionName, key)
+				SM.sites[site]['site'].LM.releaseLock(transactionName, key, commitData)
 
 		del TransactionManager.transactions[transactionName]
 
@@ -102,29 +94,29 @@ class TransactionManager:
 		print('======================================================================')
 
 	def dfs_visit(G, u, color, found_cycle):
-		if found_cycle[0]:                          # - Stop dfs if cycle is found.
+		if found_cycle[0]:													# - Stop dfs if cycle is found.
 			return
-		color[u] = "gray"    
+		color[u] = "gray"
 													# - Gray nodes are in the current path
-		for v in G[u]:                              # - Check neighbors, where G[u] is the adjacency list of u.
+		for v in G[u]:															# - Check neighbors, where G[u] is the adjacency list of u.
 			if v.isspace() != True:
-				if color[v] == "gray":                  # - Case where a loop in the current path is present.  
-					found_cycle[0] = True       
+				if color[v] == "gray":									# - Case where a loop in the current path is present.
+					found_cycle[0] = True
 					return
-				if color[v] == "white":                 # - Call dfs_visit recursively.   
+				if color[v] == "white":								 # - Call dfs_visit recursively.	 
 					TransactionManager.dfs_visit(G, v, color, found_cycle)
 		color[u] = "black"
 
-	def cycle_exists(G):                          # - G is a directed graph
+	def cycle_exists(G):													# - G is a directed graph
 		print (G)
-		color = { u : "white" for u in G  }      # - All nodes are initially white
-		found_cycle = [False]                    # - Define found_cycle as a list
+		color = { u : "white" for u in G	}			# - All nodes are initially white
+		found_cycle = [False]										# - Define found_cycle as a list
 										 
-		for u in G:                              # - Visit all nodes
-		   if color[u] == "white":
-			   TransactionManager.dfs_visit(G, u, color, found_cycle)
-		   if found_cycle[0]:
-			   break
+		for u in G:															# - Visit all nodes
+			 if color[u] == "white":
+				 TransactionManager.dfs_visit(G, u, color, found_cycle)
+			 if found_cycle[0]:
+				 break
 		return found_cycle[0]
 
 	def detectDeadlock():
@@ -141,8 +133,6 @@ class TransactionManager:
 						graph[transaction].append(resource)
 						graph[resource].append(' ')
 		print("Cycle?", TransactionManager.cycle_exists(graph))
-
-							   
 
 	def readValue(transactionName, key):
 		# Read from one site

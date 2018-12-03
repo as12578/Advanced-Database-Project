@@ -21,6 +21,9 @@ T2 commits
 recover(2)
 
 end(T1)
+{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x6': {'1': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '2': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 3, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': True}}
+defaultdict(<class 'list'>, {'T1': [' '], 'x6.1': ['T1'], 'x6.2': ['T1'], 'x6.3': ['T1'], 'x6.4': ['T1'], 'x6.5': ['T1'], 'x6.6': ['T1'], 'x6.7': ['T1'], 'x6.8': ['T1'], 'x6.9': ['T1'], 'x6.10': ['T1']})
+Cycle? False
 T1 aborts
 
 
@@ -34,7 +37,6 @@ Current Time = 10
 Site: 1
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -55,7 +57,6 @@ Pending Operations:
 Site: 2
 Start Time: 9
 Available: True
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -78,7 +79,6 @@ Pending Operations:
 Site: 3
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -99,7 +99,6 @@ Pending Operations:
 Site: 4
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -122,7 +121,6 @@ Pending Operations:
 Site: 5
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -143,7 +141,6 @@ Pending Operations:
 Site: 6
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -166,7 +163,6 @@ Pending Operations:
 Site: 7
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -187,7 +183,6 @@ Pending Operations:
 Site: 8
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -210,7 +205,6 @@ Pending Operations:
 Site: 9
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -231,7 +225,6 @@ Pending Operations:
 Site: 10
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:

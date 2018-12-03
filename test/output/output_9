@@ -23,6 +23,9 @@ R(T1,x2)
 T1 - x2: 22
 
 end(T1)
+{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 9, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}}
+defaultdict(<class 'list'>, {'T1': [' '], 'x2.1': ['T1']})
+Cycle? False
 T1 commits
 
 
@@ -36,7 +39,6 @@ Current Time = 10
 Site: 1
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -57,7 +59,6 @@ Pending Operations:
 Site: 2
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -80,7 +81,6 @@ Pending Operations:
 Site: 3
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -101,7 +101,6 @@ Pending Operations:
 Site: 4
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -124,7 +123,6 @@ Pending Operations:
 Site: 5
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -145,7 +143,6 @@ Pending Operations:
 Site: 6
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -168,7 +165,6 @@ Pending Operations:
 Site: 7
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -189,7 +185,6 @@ Pending Operations:
 Site: 8
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -212,7 +207,6 @@ Pending Operations:
 Site: 9
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -233,7 +227,6 @@ Pending Operations:
 Site: 10
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:

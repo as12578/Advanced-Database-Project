@@ -22,6 +22,9 @@ T3 commits
 recover(1)
 
 fail(2)
+{'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}}
+defaultdict(<class 'list'>, {'T2': [' ']})
+Cycle? False
 
 fail(3)
 
@@ -44,6 +47,9 @@ R(T2,x2)
 
 # but doesn't hold a lock on x2 at site 1
 begin(T5)
+{'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x2'}}, 'startTime': 2, 'locks': {'x2': {'1': {}}}, 'failed': False}}
+defaultdict(<class 'list'>, {'T2': [' ', 'x2.1'], 'x2.1': [' ']})
+Cycle? False
 
 # T5 doesn't need to wait because T2 doesn't acquire a lock
 W(T5,x2,90)
@@ -73,7 +79,6 @@ Pending Operation:
 Site: 1
 Start Time: 9
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:SHARED
 Waiting Locks:
@@ -94,7 +99,6 @@ Pending Operations:
 Site: 2
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -117,7 +121,6 @@ Pending Operations:
 Site: 3
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -138,7 +141,6 @@ Pending Operations:
 Site: 4
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -161,7 +163,6 @@ Pending Operations:
 Site: 5
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -182,7 +183,6 @@ Pending Operations:
 Site: 6
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -205,7 +205,6 @@ Pending Operations:
 Site: 7
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -226,7 +225,6 @@ Pending Operations:
 Site: 8
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -249,7 +247,6 @@ Pending Operations:
 Site: 9
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -270,7 +267,6 @@ Pending Operations:
 Site: 10
 Start Time: 0
 Available: False
-Stable: False
 Granted Locks:
 	
 Waiting Locks:

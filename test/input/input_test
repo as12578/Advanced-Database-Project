@@ -19,8 +19,9 @@ fail(2)
 R(T2,x1)
 # T1 aborts
 end(T1)
-# T2, T3, T4 will read x1: Should read 10
+# T2, T3, T4 will read x1: Should read 10. Since this is a non replicated data item
 recover(2)
+querystate()
 # T3 wil read x2: Should read 20
 W(T3, x2, 100)
 # T3 will wait since 2 transactions hold shared lock

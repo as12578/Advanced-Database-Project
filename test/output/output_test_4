@@ -43,7 +43,6 @@ Written Sites: ['2', '3', '4', '5', '6', '7', '8', '9', '10']
 Site: 1
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T1:SHARED, T2:SHARED
 Waiting Locks:
@@ -64,7 +63,6 @@ Pending Operations:
 Site: 2
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -87,7 +85,6 @@ Pending Operations:
 Site: 3
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -108,7 +105,6 @@ Pending Operations:
 Site: 4
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -131,7 +127,6 @@ Pending Operations:
 Site: 5
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -152,7 +147,6 @@ Pending Operations:
 Site: 6
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -175,7 +169,6 @@ Pending Operations:
 Site: 7
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -196,7 +189,6 @@ Pending Operations:
 Site: 8
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -219,7 +211,6 @@ Pending Operations:
 Site: 9
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -240,7 +231,6 @@ Pending Operations:
 Site: 10
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -285,7 +275,6 @@ Pending Operation:
 Site: 1
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -306,7 +295,6 @@ Pending Operations:
 Site: 2
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -329,7 +317,6 @@ Pending Operations:
 Site: 3
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -350,7 +337,6 @@ Pending Operations:
 Site: 4
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -373,7 +359,6 @@ Pending Operations:
 Site: 5
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -394,7 +379,6 @@ Pending Operations:
 Site: 6
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -417,7 +401,6 @@ Pending Operations:
 Site: 7
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -438,7 +421,6 @@ Pending Operations:
 Site: 8
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -461,7 +443,6 @@ Pending Operations:
 Site: 9
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -482,7 +463,6 @@ Pending Operations:
 Site: 10
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x2: T2:EXCLUSIVE
 Waiting Locks:
@@ -518,7 +498,6 @@ Current Time = 7
 Site: 1
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -539,7 +518,6 @@ Pending Operations:
 Site: 2
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -562,7 +540,6 @@ Pending Operations:
 Site: 3
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -583,7 +560,6 @@ Pending Operations:
 Site: 4
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -606,7 +582,6 @@ Pending Operations:
 Site: 5
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -627,7 +602,6 @@ Pending Operations:
 Site: 6
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -650,7 +624,6 @@ Pending Operations:
 Site: 7
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -671,7 +644,6 @@ Pending Operations:
 Site: 8
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -694,7 +666,6 @@ Pending Operations:
 Site: 9
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -715,7 +686,6 @@ Pending Operations:
 Site: 10
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
