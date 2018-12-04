@@ -36,6 +36,7 @@ T1 - x2: 102
 
 # T2 Will use MVRC for x1. Should read 10
 R(T2,x1)
+Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 2
 T2 - x1: 10
 
 # Committed value still 20
@@ -59,6 +60,7 @@ T4 - x1: 101
 
 # T2 Will use MVRC for x1. Should read 10
 R(T2,x1)
+Site 2: replicated key: False, last commit on site: 14, site start time: 0, Transaction start time: 2
 T2 - x1: 10
 
 # T3 wil read x2: Should read 102
@@ -143,7 +145,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 2
 Start Time: 0
@@ -165,7 +168,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 3
 Start Time: 0
@@ -185,7 +189,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 4
 Start Time: 0
@@ -207,7 +212,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 5
 Start Time: 0
@@ -227,7 +233,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 6
 Start Time: 0
@@ -249,7 +256,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 7
 Start Time: 0
@@ -269,7 +277,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 8
 Start Time: 0
@@ -291,7 +300,8 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 9
 Start Time: 0
@@ -311,7 +321,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 10
 Start Time: 0
@@ -333,7 +344,8 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 ======================================================================
 ======================================================================

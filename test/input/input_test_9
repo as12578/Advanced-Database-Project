@@ -1,0 +1,9 @@
+begin(T1)
+begin(T2)
+begin(T3)
+fail(2)
+W(T1,x1,100)
+recover(2)
+W(T2,x1,100)
+# Which transaction has locks?
+querystate()

@@ -32,6 +32,7 @@ Cycle? False
 
 # T2 Will use MVRC for x1. Should read 10. Will wait since site 2 is failed
 R(T2,x1)
+Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 2
 
 # T1 aborts
 end(T1)
@@ -94,7 +95,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 2
 Start Time: 13
@@ -116,7 +118,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 3
 Start Time: 0
@@ -136,7 +139,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 4
 Start Time: 0
@@ -158,7 +162,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 5
 Start Time: 0
@@ -178,7 +183,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 6
 Start Time: 0
@@ -200,7 +206,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 7
 Start Time: 0
@@ -220,7 +227,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 8
 Start Time: 0
@@ -242,7 +250,8 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 9
 Start Time: 0
@@ -262,7 +271,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 10
 Start Time: 0
@@ -284,7 +294,8 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 ======================================================================
 ======================================================================
@@ -326,6 +337,7 @@ Site 10 - x2: 100
 
 # T2 will read 20
 R(T2, x2)
+Site 1: replicated key: True, last commit on site: 18, site start time: 0, Transaction start time: 2
 T2 - x2: 20
 
 # T2 commits
@@ -373,7 +385,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 2
 Start Time: 13
@@ -395,7 +408,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 3
 Start Time: 0
@@ -415,7 +429,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 4
 Start Time: 0
@@ -437,7 +452,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 5
 Start Time: 0
@@ -457,7 +473,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 6
 Start Time: 0
@@ -479,7 +496,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 7
 Start Time: 0
@@ -499,7 +517,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 8
 Start Time: 0
@@ -521,7 +540,8 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 9
 Start Time: 0
@@ -541,7 +561,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 10
 Start Time: 0
@@ -563,7 +584,8 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 ======================================================================
 ======================================================================

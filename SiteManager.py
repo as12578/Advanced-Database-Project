@@ -43,7 +43,8 @@ class SiteManager:
 	def recover(site, time):
 		SiteManager.sites[site]['available'] = True
 		SiteManager.sites[site]['startTime'] = Timer.CURRENT_TIME
-		SiteManager.doRecoveryAllowedPendingOperations(site)
+		SiteManager.sites[site]['site'].DM.clearUncommittedData()
+		SiteManager.doRecoveryAllowedPendingOperation(site)
 
 	def querySiteState(site):
 		return SiteManager.sites[site]['state']
@@ -51,19 +52,29 @@ class SiteManager:
 	def dumpSite(site):
 		SiteManager.sites[site]['site'].DM.dump()
 
-	def doRecoveryAllowedPendingOperations(site):
+	# If writes are pending, transaction can go forward
+	def doRecoveryAllowedPendingOperation(site):
 		TM = TransactionManager.TransactionManager
+		keysProcessed = {}
 		for pendingOperation in SiteManager.sites[site]['pendingOperations']:
 			transaction = pendingOperation['transaction']
-
+			operation = pendingOperation['operation']
 			key = pendingOperation['options']['key']
 			key_index = int(key[1:])
 
 			DM = SiteManager.sites[site]['site'].DM
-			if key_index % 2 == 0 and DM.getLastCommitTime(key) < SiteManager.sites[site]['startTime']:
+			# TODO: Different condition for read only transactions for replicated data
+			if operation == TransactionManager.Operation.READ and key_index % 2 == 0 and DM.getLastCommitTime(key) < SiteManager.sites[site]['startTime']:
 				continue
 
-			# Delete pending operations at all other sites for transaction. Because if a transaction is waiting on multiple sites, it is waiting for the first site to succeed.
+			if operation == TransactionManager.Operation.WRITE and key in keysProcessed:
+				continue
+
+			keysProcessed[key] = True
+
+			# Delete pending operations at all other sites for transaction.
+			# Because if a transaction is waiting on multiple sites, it is waiting for the first site to succeed.
+			# It can not have different pending operations on different sites
 			for otherSite in SiteManager.sites:
 				sitePendingOperations = SiteManager.sites[otherSite]['pendingOperations']
 				SiteManager.sites[otherSite]['pendingOperations'] = list(filter(lambda pendingOperation: pendingOperation['transaction'] != transaction, SiteManager.sites[otherSite]['pendingOperations']))
@@ -71,7 +82,7 @@ class SiteManager:
 			# A read only transaction needs no locks
 			if TM.transactions[transaction]['readOnly']:
 				TM.doPendingOperation(transaction, site)
-				return
+				continue
 
 			lockType = LockManager.LockType.SHARED
 			if pendingOperation['operation'] == TransactionManager.Operation.WRITE:
@@ -118,7 +129,7 @@ class SiteManager:
 			print('Start Time:', SiteManager.sites[site]['startTime'])
 			print('Available:', SiteManager.sites[site]['available'])
 			SiteManager.sites[site]['site'].print()
-			print('Pending Operations:', '\n'.join(list(map(SiteManager._pendingOperationToString, SiteManager.sites[site]['pendingOperations']))))
+			print('Pending Operations:\n', '\n'.join(list(map(SiteManager._pendingOperationToString, SiteManager.sites[site]['pendingOperations']))))
 			print()
 		print('======================================================================')
 
@@ -131,27 +142,8 @@ class SiteManager:
 		if pendingOperation['operation'] == TransactionManager.Operation.READ:
 			return '%s: Read %s'%(pendingOperation['transaction'], operationOptions['key'])
 
-		return '\n%s: Write %s: %s'%(pendingOperation['transaction'], operationOptions['key'], operationOptions['value'])
+		return '%s: Write %s: %s'%(pendingOperation['transaction'], operationOptions['key'], operationOptions['value'])
 
-	def _recoverSiteData(site):
-		# Recover data
-		for key in SiteManager.sites[site]['site'].DM.data:
-			key_index = int(key[1:])
-			sites = SiteManager.findSitesForKeyIndex(key_index)
-			for copySite in sites:
-				# TODO: Copy if condition from below function
-				if SiteManager.sites[str(copySite.site)]['available'] and copySite.site != site:
-					# Copy data
-					SiteManager.sites[site]['site'].DM.data[key] = copySite.DM.data[key][:]
-					break
-
-	def recoverKeyData(site, key):
-		# Recover data
-		key_index = int(key[1:])
-		sites = SiteManager.findSitesForKeyIndex(key_index)
-		for copySite in sites:
-			DM = SiteManager.sites[str(copySite.site)]['site'].DM
-			if SiteManager.sites[str(copySite.site)]['available'] and copySite.site != site and DM.getLastCommitTime(key) >= SiteManager.sites[str(copySite.site)]['startTime']:
-				# Copy data
-				SiteManager.sites[site]['site'].DM.data[key] = copySite.DM.data[key][:]
-				break
+	def clearPendingOperationsForTransaction(transaction):
+		for site in SiteManager.sites:
+			SiteManager.sites[site]['pendingOperations'] = list(filter(lambda operation: operation['transaction'] != transaction, SiteManager.sites[site]['pendingOperations']))

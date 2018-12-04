@@ -21,14 +21,14 @@ class LockManager:
 			self.waitingLocks[key] = []
 
 	def requestLock(self, transaction, key, lockType):
+		TM = DatabaseManager.DatabaseManager.TM
 		SM = DatabaseManager.DatabaseManager.SM
 		DM = SM.sites[self.site]['site'].DM
 		key_index = int(key[1:])
+
 		if lockType == LockType.SHARED and key_index % 2 == 0 and DM.getLastCommitTime(key) < SM.sites[self.site]['startTime']:
 			DatabaseManager.DatabaseManager.TM.rejectLock(transaction, self.site)
 			return
-		elif lockType == LockType.EXCLUSIVE and key_index % 2 == 0 and DM.getLastCommitTime(key) < SM.sites[self.site]['startTime']:
-			SM.recoverKeyData(self.site, key)
 
 		if len(self.grantedLocks[key]) == 0:
 			self.grantedLocks[key].append({
@@ -53,14 +53,18 @@ class LockManager:
 
 	def releaseLock(self, transaction, key, committed):
 		self.grantedLocks[key] = list(filter(lambda lock: lock['transaction'] != transaction, self.grantedLocks[key]))
+		self.waitingLocks[key] = list(filter(lambda lock: lock['transaction'] != transaction, self.waitingLocks[key]))
 
-		# If a transaction commits and any operation is pending on a site, it means it is waiting for a committed write
+		# If a transaction commits and any operation is pending on the site, it will proceed
 		if committed:
+			# Clear waiting locks. Allow pending operation for key to acquire locks. Append previously waiting to get lock
 			tempWaitingLocks = self.waitingLocks[key]
 			self.waitingLocks[key] = []
 			SM = DatabaseManager.DatabaseManager.SM
 			SM.doPendingOperationsForKey(self.site, key)
 			self.waitingLocks[key].extend(tempWaitingLocks)
+
+		# If a transaction aborts, and there were pending reads, there can only be write locks in the waiting queue. Normal execution can handle this scenario
 
 		# No transactions waiting
 		if len(self.waitingLocks[key]) == 0:

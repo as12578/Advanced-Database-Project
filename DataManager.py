@@ -62,5 +62,9 @@ class DataManager:
 		lastCommittedIndex = self.committed[key]
 		self.data[key] = self.data[key][:lastCommittedIndex + 1]
 
+	def clearUncommittedData(self):
+		for key in self.data:
+			self.revertKey(key)
+
 	def getLastCommitTime(self, key):
 		return self.data[key][self.committed[key]]['committedTime']

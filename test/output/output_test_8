@@ -1,40 +1,62 @@
-# Test 12
-# both commit
+# Read-only txn read replicated data from site which have committed data since it started?
 begin(T1)
 
-begin(T2)
+begin(T3)
 
-R(T1,x2)
-T1 - x2: 20
+fail(1)
 
-R(T2,x2)
-T2 - x2: 20
+# Write to sites 2-10
+W(T1, x2, 100)
 
+# Commit
 end(T1)
 T1 commits
 
-W(T2,x2,10)
+beginRO(T2)
 
-end(T2)
-T2 commits
+recover(1)
 
+# Write to all sites
+W(T3, x2, 200)
+
+# commit
+end(T3)
+T3 commits
+
+# Allow read from site 1?
+R(T2, x2)
+{'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 6, 'locks': {}, 'failed': False}}
+defaultdict(<class 'list'>, {'T2': [' ']})
+Cycle? False
+Site 1: replicated key: True, last commit on site: 9, site start time: 7, Transaction start time: 6
+T2 - x2: 20
+
+# Should Read only transactions be allowed to read from sites which haven't committed a value after they started and before the read only transaction began?
 
 =============================System State=============================
-Current Time = 7
+Current Time = 10
 
 =========================Current Transactions=========================
+Transaction: T2
+Read Only: True
+Start Time: 6
+Aborted: False
+Locks:
+	
+Pending Operation: 
+
 ======================================================================
 
 ============================All Site State============================
 Site: 1
-Start Time: 0
+Start Time: 7
 Available: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T3:200:9
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -56,7 +78,7 @@ Waiting Locks:
 	
 All Data:
 	x1: :10:0
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -78,7 +100,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -99,7 +121,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -122,7 +144,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -143,7 +165,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x4: :40:0
 	x5: :50:0
 	x6: :60:0
@@ -166,7 +188,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -187,7 +209,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -210,7 +232,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -231,7 +253,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0 T1:100:5 T3:200:9
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0

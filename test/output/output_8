@@ -6,9 +6,11 @@ begin(T1)
 beginRO(T2)
 
 R(T2,x1)
+Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 2
 T2 - x1: 10
 
 R(T2,x2)
+Site 1: replicated key: True, last commit on site: 0, site start time: 0, Transaction start time: 2
 T2 - x2: 20
 
 W(T1,x3,33)
@@ -19,9 +21,11 @@ T1 commits
 beginRO(T3)
 
 R(T3,x3)
+Site 4: replicated key: False, last commit on site: 6, site start time: 0, Transaction start time: 7
 T3 - x3: 33
 
 R(T2,x3)
+Site 4: replicated key: False, last commit on site: 6, site start time: 0, Transaction start time: 2
 T2 - x3: 30
 
 end(T2)
@@ -59,7 +63,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 2
 Start Time: 0
@@ -81,7 +86,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 3
 Start Time: 0
@@ -101,7 +107,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 4
 Start Time: 0
@@ -123,7 +130,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 5
 Start Time: 0
@@ -143,7 +151,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 6
 Start Time: 0
@@ -165,7 +174,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 7
 Start Time: 0
@@ -185,7 +195,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 8
 Start Time: 0
@@ -207,7 +218,8 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 9
 Start Time: 0
@@ -227,7 +239,8 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 Site: 10
 Start Time: 0
@@ -249,7 +262,8 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+ 
 
 ======================================================================
 ======================================================================

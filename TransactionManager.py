@@ -51,6 +51,7 @@ class TransactionManager:
 
 				SM.sites[site]['site'].LM.releaseLock(transactionName, key, commitData)
 
+		SM.clearPendingOperationsForTransaction(transactionName)
 		del TransactionManager.transactions[transactionName]
 
 	def shouldTransactionAbort(transaction):
@@ -154,8 +155,13 @@ class TransactionManager:
 			failedSites = []
 
 			for site in sites:
+				DM = SM.sites[site.site]['site'].DM
+				print('Site %s: replicated key: %s, last commit on site: %s, site start time: %s, Transaction start time: %s'%(site.site, key_index % 2 == 0, DM.getLastCommitTime(key), SM.sites[site.site]['startTime'], TransactionManager.transactions[transactionName]['startTime']))
 				if SM.sites[site.site]['available'] == False:
 					failedSites.append(site)
+				# elif key_index % 2 == 0 and (DM.getLastCommitTime(key) < SM.sites[site.site]['startTime'] or DM.getLastCommitTime(key) > TransactionManager.transactions[transactionName]['startTime']):
+				# 	print('nisargthakkar readOnly pending')
+				# 	continue
 				else:
 					TransactionManager.doPendingOperation(transactionName, site.site)
 					break
@@ -188,10 +194,6 @@ class TransactionManager:
 			else:
 				TransactionManager.transactions[transactionName]['locks'][key][site.site] = {}
 				site.LM.requestLock(transactionName, key, LockType.SHARED)
-				# # Check if operation done. Check if lock granted. since we are doing everything sequentially
-				# if key in TransactionManager.transactions[transactionName]['locks'] and site.site in TransactionManager.transactions[transactionName]['locks'][key] and 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site]:
-				# 	# TODO: Anything to do here?
-				# 	pass
 				break
 
 		# If all sites have failed
@@ -267,6 +269,7 @@ class TransactionManager:
 		pendingOperation = TransactionManager.transactions[transactionName]['pendingOperation']
 
 		key = pendingOperation['options']['key']
+		key_index = int(key[1:])
 
 		clearOp = True
 		if pendingOperation['operation'] == Operation.READ and TransactionManager.transactions[transactionName]['readOnly']:
@@ -289,6 +292,7 @@ class TransactionManager:
 
 	def notifySiteFailed(site):
 		SM = DatabaseManager.DatabaseManager.SM
+		SM.sites[site]['pendingOperations'] = []
 		for transaction in TransactionManager.transactions:
 			transactionFailed = False
 			transactionDetails = TransactionManager.transactions[transaction]
@@ -301,7 +305,7 @@ class TransactionManager:
 					elif site == lockSite:
 						# Transaction was waiting for a lock on site
 						if key not in TransactionManager.transactions[transaction]['locks']:
-							TransactionManager.transactions[transaction]['locks'][key][site.site] = {}
+							TransactionManager.transactions[transaction]['locks'][key][site] = {}
 
 						SM.sites[site]['pendingOperations'].append(TransactionManager._getSitePendingOperationFromTransaction(transaction))
 
@@ -309,6 +313,15 @@ class TransactionManager:
 					break
 
 			if transactionFailed:
+				# Abort transaction
+				transactionLocks = transactionDetails['locks']
+				for key in transactionLocks:
+					for site in transactionLocks[key]:
+						SM.sites[site]['site'].DM.revertKey(key)
+						SM.sites[site]['site'].LM.releaseLock(transaction, key, False)
+				
+				transactionDetails['locks'] = {}
+				
 				TransactionManager.transactions[transaction]['pendingOperation'] = {
 					'operation': Operation.NONE,
 					'options': {}
