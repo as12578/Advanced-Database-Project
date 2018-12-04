@@ -129,7 +129,7 @@ class SiteManager:
 			print('Start Time:', SiteManager.sites[site]['startTime'])
 			print('Available:', SiteManager.sites[site]['available'])
 			SiteManager.sites[site]['site'].print()
-			print('Pending Operations:\n', '\n'.join(list(map(SiteManager._pendingOperationToString, SiteManager.sites[site]['pendingOperations']))))
+			print('Pending Operations:\n%s'%'\n'.join(list(map(SiteManager._pendingOperationToString, SiteManager.sites[site]['pendingOperations']))))
 			print()
 		print('======================================================================')
 

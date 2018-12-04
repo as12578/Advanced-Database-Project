@@ -58,7 +58,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 2
 Start Time: 0
@@ -81,7 +81,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- T1: Write x1: 2
+T1: Write x1: 2
 
 Site: 3
 Start Time: 0
@@ -102,7 +102,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 4
 Start Time: 0
@@ -125,7 +125,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 5
 Start Time: 0
@@ -146,7 +146,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 6
 Start Time: 0
@@ -169,7 +169,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 7
 Start Time: 0
@@ -190,7 +190,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 8
 Start Time: 0
@@ -213,7 +213,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 9
 Start Time: 0
@@ -234,7 +234,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 10
 Start Time: 0
@@ -257,7 +257,7 @@ All Data:
 	x19: :190:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 ======================================================================
 ======================================================================
@@ -308,7 +308,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 2
 Start Time: 6
@@ -331,7 +331,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 3
 Start Time: 0
@@ -352,7 +352,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 4
 Start Time: 0
@@ -375,7 +375,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 5
 Start Time: 0
@@ -396,7 +396,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 6
 Start Time: 0
@@ -419,7 +419,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 7
 Start Time: 0
@@ -440,7 +440,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 8
 Start Time: 0
@@ -463,7 +463,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 9
 Start Time: 0
@@ -484,7 +484,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 10
 Start Time: 0
@@ -507,7 +507,7 @@ All Data:
 	x19: :190:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 ======================================================================
 ======================================================================
@@ -559,7 +559,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 2
 Start Time: 6
@@ -582,7 +582,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 3
 Start Time: 0
@@ -603,7 +603,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 4
 Start Time: 0
@@ -626,7 +626,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 5
 Start Time: 0
@@ -647,7 +647,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 6
 Start Time: 0
@@ -670,7 +670,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 7
 Start Time: 0
@@ -691,7 +691,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 8
 Start Time: 0
@@ -714,7 +714,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 9
 Start Time: 0
@@ -735,7 +735,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 10
 Start Time: 0
@@ -758,7 +758,7 @@ All Data:
 	x19: :190:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 ======================================================================
 ======================================================================
@@ -823,7 +823,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 2
 Start Time: 6
@@ -846,7 +846,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 3
 Start Time: 0
@@ -867,7 +867,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 4
 Start Time: 0
@@ -890,7 +890,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 5
 Start Time: 0
@@ -911,7 +911,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 6
 Start Time: 0
@@ -934,7 +934,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 7
 Start Time: 0
@@ -955,7 +955,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 8
 Start Time: 0
@@ -978,7 +978,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 9
 Start Time: 0
@@ -999,7 +999,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 10
 Start Time: 0
@@ -1022,13 +1022,13 @@ All Data:
 	x19: :190:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 ======================================================================
 ======================================================================
 # Now let T2 read x1 = 2
 end(T1)
-{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x1': {'2': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x1'}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}}, 'x1': {'2': {}}}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x1', 'value': '5)waitforloc', 'pendingSites': [<Site.Site object at 0x7fdf6c3f48d0>], 'writtenSites': []}}, 'startTime': 8, 'locks': {'x1': {'2': {}}}, 'failed': False}}
+{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x1': {'2': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x1'}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}}, 'x1': {'2': {}}}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x1', 'value': '5)waitforloc', 'pendingSites': [<Site.Site object at 0x7f63ee3b48d0>], 'writtenSites': []}}, 'startTime': 8, 'locks': {'x1': {'2': {}}}, 'failed': False}}
 defaultdict(<class 'list'>, {'T1': [' '], 'x1.2': ['T1', ' ', ' '], 'T2': [' ', 'x1.2'], 'x2.1': ['T2'], 'x2.3': ['T2'], 'x2.4': ['T2'], 'x2.5': ['T2'], 'x2.6': ['T2'], 'x2.7': ['T2'], 'x2.8': ['T2'], 'x2.9': ['T2'], 'x2.10': ['T2'], 'T3': [' ', 'x1.2']})
 Cycle? False
 T1 commits
@@ -1082,7 +1082,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 2
 Start Time: 6
@@ -1105,7 +1105,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 3
 Start Time: 0
@@ -1126,7 +1126,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 4
 Start Time: 0
@@ -1149,7 +1149,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 5
 Start Time: 0
@@ -1170,7 +1170,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 6
 Start Time: 0
@@ -1193,7 +1193,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 7
 Start Time: 0
@@ -1214,7 +1214,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 8
 Start Time: 0
@@ -1237,7 +1237,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 9
 Start Time: 0
@@ -1258,7 +1258,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 10
 Start Time: 0
@@ -1281,7 +1281,7 @@ All Data:
 	x19: :190:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 ======================================================================
 ======================================================================
@@ -1319,7 +1319,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 2
 Start Time: 6
@@ -1342,7 +1342,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 3
 Start Time: 0
@@ -1363,7 +1363,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 4
 Start Time: 0
@@ -1386,7 +1386,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 5
 Start Time: 0
@@ -1407,7 +1407,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 6
 Start Time: 0
@@ -1430,7 +1430,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 7
 Start Time: 0
@@ -1451,7 +1451,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 8
 Start Time: 0
@@ -1474,7 +1474,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 9
 Start Time: 0
@@ -1495,7 +1495,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 10
 Start Time: 0
@@ -1518,7 +1518,7 @@ All Data:
 	x19: :190:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 ======================================================================
 ======================================================================

@@ -52,7 +52,7 @@ end(T4)
 T4 commits
 
 end(T3)
-{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x2', 'value': '10', 'pendingSites': [<Site.Site object at 0x7f3ad7a9be48>], 'writtenSites': ['2', '3', '4', '5', '6', '7', '8', '9', '10']}}, 'startTime': 1, 'locks': {'x6': {'1': {'firstGrant': 11, 'lockType': <LockType.SHARED: 1>}}, 'x2': {'1': {}, '2': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 12, 'lockType': <LockType.SHARED: 1>}}, 'x3': {'4': {'firstGrant': 14, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 3, 'locks': {}, 'failed': True}}
+{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x2', 'value': '10', 'pendingSites': [<Site.Site object at 0x7f018520be48>], 'writtenSites': ['2', '3', '4', '5', '6', '7', '8', '9', '10']}}, 'startTime': 1, 'locks': {'x6': {'1': {'firstGrant': 11, 'lockType': <LockType.SHARED: 1>}}, 'x2': {'1': {}, '2': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 13, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 12, 'lockType': <LockType.SHARED: 1>}}, 'x3': {'4': {'firstGrant': 14, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 3, 'locks': {}, 'failed': True}}
 defaultdict(<class 'list'>, {'T1': [' ', 'x2.1'], 'x6.1': ['T1'], 'x2.1': [' ', 'T2'], 'x2.2': ['T1'], 'x2.3': ['T1'], 'x2.4': ['T1'], 'x2.5': ['T1'], 'x2.6': ['T1'], 'x2.7': ['T1'], 'x2.8': ['T1'], 'x2.9': ['T1'], 'x2.10': ['T1'], 'T2': [' '], 'x3.4': ['T2'], 'T3': [' ']})
 Cycle? False
 T3 aborts
@@ -90,7 +90,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 2
 Start Time: 0
@@ -113,7 +113,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 3
 Start Time: 0
@@ -134,7 +134,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 4
 Start Time: 8
@@ -157,7 +157,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 5
 Start Time: 0
@@ -178,7 +178,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 6
 Start Time: 0
@@ -201,7 +201,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 7
 Start Time: 0
@@ -222,7 +222,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 8
 Start Time: 0
@@ -245,7 +245,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 9
 Start Time: 0
@@ -266,7 +266,7 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 Site: 10
 Start Time: 0
@@ -289,7 +289,7 @@ All Data:
 	x19: :190:0
 	x20: :200:0
 Pending Operations:
- 
+
 
 ======================================================================
 ======================================================================
