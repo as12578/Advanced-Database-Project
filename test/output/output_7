@@ -6,11 +6,9 @@ begin(T1)
 beginRO(T2)
 
 R(T2,x1)
-Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 2
 T2 - x1: 10
 
 R(T2,x2)
-Site 1: replicated key: True, last commit on site: 0, site start time: 0, Transaction start time: 2
 T2 - x2: 20
 
 W(T1,x3,33)
@@ -19,7 +17,6 @@ end(T1)
 T1 commits
 
 R(T2,x3)
-Site 4: replicated key: False, last commit on site: 6, site start time: 0, Transaction start time: 2
 T2 - x3: 30
 
 end(T2)

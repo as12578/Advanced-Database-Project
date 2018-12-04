@@ -5,10 +5,8 @@ beginRO(T2)
 fail(2)
 
 R(T1, x1)
-Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 1
 
 R(T2, x1)
-Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 2
 
 recover(2)
 T1 - x1: 10

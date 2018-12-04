@@ -123,3 +123,10 @@ dmypy.json
 .venv/
 
 # End of https://www.gitignore.io/api/python
+
+# Reprozip code
+.reprozip-trace/
+
+reprounzipped_*
+# Log files for diffing reprozip
+*_LOG
