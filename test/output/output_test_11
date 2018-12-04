@@ -1,21 +1,22 @@
-# Test 11
-# All should commit
 begin(T1)
 
-begin(T2)
+beginRO(T2)
 
-R(T1,x2)
-T1 - x2: 20
+begin(T3)
 
-R(T2,x2)
-T2 - x2: 20
+fail(2)
 
-W(T2,x2,10)
+W(T1, x1, 100)
+
+W(T3, x1, 1000)
+
+R(T2, x1)
+Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 2
 
 querystate()
 
 =============================System State=============================
-Current Time = 5
+Current Time = 7
 
 =========================Current Transactions=========================
 Transaction: T1
@@ -23,19 +24,30 @@ Read Only: False
 Start Time: 1
 Aborted: False
 Locks:
-	x2: 1:SHARED:3
+	x1: 
 Pending Operation: 
+Write x1: 100
+Pending Sites: [] 
+Written Sites: []
 
 Transaction: T2
-Read Only: False
+Read Only: True
 Start Time: 2
 Aborted: False
 Locks:
-	x2: 2:EXCLUSIVE:5   3:EXCLUSIVE:5   4:EXCLUSIVE:5   5:EXCLUSIVE:5   6:EXCLUSIVE:5   7:EXCLUSIVE:5   8:EXCLUSIVE:5   9:EXCLUSIVE:5   10:EXCLUSIVE:5
+	
+Pending Operation: Read x1
+
+Transaction: T3
+Read Only: False
+Start Time: 3
+Aborted: False
+Locks:
+	x1: 
 Pending Operation: 
-Write x2: 10
-Pending Sites: ['1'] 
-Written Sites: ['2', '3', '4', '5', '6', '7', '8', '9', '10']
+Write x1: 1000
+Pending Sites: [] 
+Written Sites: []
 
 ======================================================================
 
@@ -44,9 +56,9 @@ Site: 1
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T1:SHARED, T2:SHARED
+	
 Waiting Locks:
-	x2: T2:EXCLUSIVE
+	
 All Data:
 	x2: :20:0
 	x4: :40:0
@@ -63,14 +75,14 @@ Pending Operations:
 
 Site: 2
 Start Time: 0
-Available: True
+Available: False
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
 	x1: :10:0
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -82,17 +94,19 @@ All Data:
 	x18: :180:0
 	x20: :200:0
 Pending Operations:
-
+T1: Write x1: 100
+T3: Write x1: 1000
+T2: Read x1
 
 Site: 3
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -109,11 +123,11 @@ Site: 4
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -132,11 +146,11 @@ Site: 5
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -153,11 +167,11 @@ Site: 6
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x5: :50:0
 	x6: :60:0
@@ -176,11 +190,11 @@ Site: 7
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -197,11 +211,11 @@ Site: 8
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -220,11 +234,11 @@ Site: 9
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -241,11 +255,11 @@ Site: 10
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -262,21 +276,32 @@ Pending Operations:
 
 ======================================================================
 ======================================================================
+recover(2)
+T2 - x1: 10
+
 end(T1)
 T1 commits
 
 querystate()
 
 =============================System State=============================
-Current Time = 6
+Current Time = 9
 
 =========================Current Transactions=========================
 Transaction: T2
-Read Only: False
+Read Only: True
 Start Time: 2
 Aborted: False
 Locks:
-	x2: 1:EXCLUSIVE:6   2:EXCLUSIVE:5   3:EXCLUSIVE:5   4:EXCLUSIVE:5   5:EXCLUSIVE:5   6:EXCLUSIVE:5   7:EXCLUSIVE:5   8:EXCLUSIVE:5   9:EXCLUSIVE:5   10:EXCLUSIVE:5
+	
+Pending Operation: 
+
+Transaction: T3
+Read Only: False
+Start Time: 3
+Aborted: False
+Locks:
+	x1: 2:EXCLUSIVE:9
 Pending Operation: 
 
 ======================================================================
@@ -286,11 +311,11 @@ Site: 1
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -304,15 +329,15 @@ Pending Operations:
 
 
 Site: 2
-Start Time: 0
+Start Time: 8
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	x1: T3:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
-	x1: :10:0
-	x2: :20:0 T2:10:-1
+	x1: :10:0 T1:100:9 T3:1000:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -330,11 +355,11 @@ Site: 3
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -351,11 +376,11 @@ Site: 4
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -374,11 +399,11 @@ Site: 5
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -395,11 +420,11 @@ Site: 6
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x5: :50:0
 	x6: :60:0
@@ -418,11 +443,11 @@ Site: 7
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -439,11 +464,11 @@ Site: 8
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -462,11 +487,11 @@ Site: 9
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -483,11 +508,11 @@ Site: 10
 Start Time: 0
 Available: True
 Granted Locks:
-	x2: T2:EXCLUSIVE
+	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:-1
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -504,14 +529,25 @@ Pending Operations:
 
 ======================================================================
 ======================================================================
-end(T2)
-T2 commits
+end(T3)
+{'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 3, 'locks': {'x1': {'2': {'firstGrant': 9, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}}
+defaultdict(<class 'list'>, {'T2': [' '], 'T3': [' '], 'x1.2': ['T3']})
+Cycle? False
+T3 commits
 
 
 =============================System State=============================
-Current Time = 7
+Current Time = 10
 
 =========================Current Transactions=========================
+Transaction: T2
+Read Only: True
+Start Time: 2
+Aborted: False
+Locks:
+	
+Pending Operation: 
+
 ======================================================================
 
 ============================All Site State============================
@@ -523,7 +559,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -537,15 +573,15 @@ Pending Operations:
 
 
 Site: 2
-Start Time: 0
+Start Time: 8
 Available: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x1: :10:0
-	x2: :20:0 T2:10:7
+	x1: :10:0 T1:100:9 T3:1000:10
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -567,7 +603,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -588,7 +624,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x3: :30:0
 	x4: :40:0
 	x6: :60:0
@@ -611,7 +647,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -632,7 +668,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x4: :40:0
 	x5: :50:0
 	x6: :60:0
@@ -655,7 +691,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -676,7 +712,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x7: :70:0
@@ -699,7 +735,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0
@@ -720,7 +756,7 @@ Granted Locks:
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T2:10:7
+	x2: :20:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0

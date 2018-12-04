@@ -25,7 +25,7 @@ class DataManager:
 
 	def dump(self):
 		dumpOut = 'Site %s - ' % (self.site)
-		for key in self.data.keys():
+		for key in self.data:
 			lastCommittedIndex = self.committed[key]
 			dumpOut += '%s: %s ' % (key, self.data[key][lastCommittedIndex]['value'])
 		print(dumpOut.strip())
@@ -52,12 +52,19 @@ class DataManager:
 
 		return value
 
-	def commitTransactionKey(self, transaction, key, commitTime):
+	def persistTransactionKey(self, transaction, key, commitTime):
 		lastCommittedIndex = self.committed[key]
 		if len(self.data[key]) > lastCommittedIndex + 1 and self.data[key][lastCommittedIndex + 1]['transaction'] == transaction:
 			self.committed[key] = len(self.data[key]) - 1
 			self.data[key][lastCommittedIndex + 1]['committedTime'] = commitTime
 
-	def abortTransactionKey(self, transaction, key, commitTime):
+	def revertKey(self, key):
 		lastCommittedIndex = self.committed[key]
 		self.data[key] = self.data[key][:lastCommittedIndex + 1]
+
+	def clearUncommittedData(self):
+		for key in self.data:
+			self.revertKey(key)
+
+	def getLastCommitTime(self, key):
+		return self.data[key][self.committed[key]]['committedTime']

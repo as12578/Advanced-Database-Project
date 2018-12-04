@@ -16,17 +16,19 @@ class LockManager:
 		self.waitingLocks[key] = []
 
 	def resetLocks(self):
-		for key in self.grantedLocks.keys():
+		for key in self.grantedLocks:
 			self.grantedLocks[key] = []
 			self.waitingLocks[key] = []
 
 	def requestLock(self, transaction, key, lockType):
+		TM = DatabaseManager.DatabaseManager.TM
 		SM = DatabaseManager.DatabaseManager.SM
-		if not SM.sites[self.site]['stable'] and lockType == LockType.SHARED:
+		DM = SM.sites[self.site]['site'].DM
+		key_index = int(key[1:])
+
+		if lockType == LockType.SHARED and key_index % 2 == 0 and DM.getLastCommitTime(key) < SM.sites[self.site]['startTime']:
 			DatabaseManager.DatabaseManager.TM.rejectLock(transaction, self.site)
 			return
-		elif not SM.sites[self.site]['stable']:
-			SM.recoverSiteData(self.site)
 
 		if len(self.grantedLocks[key]) == 0:
 			self.grantedLocks[key].append({
@@ -49,12 +51,20 @@ class LockManager:
 				'transaction': transaction
 			})
 
-		if not SM.sites[self.site]['stable']:
-			SM.sites[self.site]['stable'] = True
-			SM.doPendingOperations(self.site)
-
-	def releaseLock(self, transaction, key):
+	def releaseLock(self, transaction, key, committed):
 		self.grantedLocks[key] = list(filter(lambda lock: lock['transaction'] != transaction, self.grantedLocks[key]))
+		self.waitingLocks[key] = list(filter(lambda lock: lock['transaction'] != transaction, self.waitingLocks[key]))
+
+		# If a transaction commits and any operation is pending on the site, it will proceed
+		if committed:
+			# Clear waiting locks. Allow pending operation for key to acquire locks. Append previously waiting to get lock
+			tempWaitingLocks = self.waitingLocks[key]
+			self.waitingLocks[key] = []
+			SM = DatabaseManager.DatabaseManager.SM
+			SM.doPendingOperationsForKey(self.site, key)
+			self.waitingLocks[key].extend(tempWaitingLocks)
+
+		# If a transaction aborts, and there were pending reads, there can only be write locks in the waiting queue. Normal execution can handle this scenario
 
 		# No transactions waiting
 		if len(self.waitingLocks[key]) == 0:

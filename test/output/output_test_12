@@ -1,35 +1,40 @@
-# Test 7
-# T2 should read the initial version of x3 based on multiversion read
-# consistency.
-begin(T1)
+beginRO(T1)
 
 beginRO(T2)
 
-R(T2,x1)
+fail(2)
+
+R(T1, x1)
+Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 1
+
+R(T2, x1)
 Site 2: replicated key: False, last commit on site: 0, site start time: 0, Transaction start time: 2
+
+recover(2)
+T1 - x1: 10
 T2 - x1: 10
-
-R(T2,x2)
-Site 1: replicated key: True, last commit on site: 0, site start time: 0, Transaction start time: 2
-T2 - x2: 20
-
-W(T1,x3,33)
-
-end(T1)
-T1 commits
-
-R(T2,x3)
-Site 4: replicated key: False, last commit on site: 6, site start time: 0, Transaction start time: 2
-T2 - x3: 30
-
-end(T2)
-T2 commits
 
 
 =============================System State=============================
-Current Time = 8
+Current Time = 6
 
 =========================Current Transactions=========================
+Transaction: T1
+Read Only: True
+Start Time: 1
+Aborted: False
+Locks:
+	
+Pending Operation: 
+
+Transaction: T2
+Read Only: True
+Start Time: 2
+Aborted: False
+Locks:
+	
+Pending Operation: 
+
 ======================================================================
 
 ============================All Site State============================
@@ -55,7 +60,7 @@ Pending Operations:
 
 
 Site: 2
-Start Time: 0
+Start Time: 6
 Available: True
 Granted Locks:
 	
@@ -107,7 +112,7 @@ Waiting Locks:
 	
 All Data:
 	x2: :20:0
-	x3: :30:0 T1:33:6
+	x3: :30:0
 	x4: :40:0
 	x6: :60:0
 	x8: :80:0

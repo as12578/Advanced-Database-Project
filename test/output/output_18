@@ -25,7 +25,25 @@ R(T1,x1)
 T1 - x1: 10
 
 R(T2,x2)
+{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x1': {'2': {'firstGrant': 9, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 3, 'locks': {'x3': {'4': {'firstGrant': 6, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}, 'T4': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 4, 'locks': {'x4': {'1': {'firstGrant': 7, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}, 'T5': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 5, 'locks': {'x5': {'6': {'firstGrant': 8, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}}
+defaultdict(<class 'list'>, {'T1': [' '], 'x1.2': ['T1'], 'T2': [' '], 'T3': [' '], 'x3.4': ['T3'], 'T4': [' '], 'x4.1': ['T4'], 'T5': [' '], 'x5.6': ['T5']})
+Cycle? False
 T2 - x2: 20
+
+R(T2,x6)
+T2 - x6: 60
+
+R(T2,x7)
+T2 - x7: 70
+
+R(T2,x8)
+T2 - x8: 80
+
+R(T2,x9)
+T2 - x9: 90
+
+R(T2,x10)
+T2 - x10: 100
 
 W(T1,x2,10)
 
@@ -36,6 +54,9 @@ W(T3,x4,30)
 W(T4,x5,40)
 
 W(T5,x1,50)
+{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x2', 'value': '10', 'pendingSites': [<Site.Site object at 0x7f8d7621be48>], 'writtenSites': ['2', '3', '4', '5', '6', '7', '8', '9', '10']}}, 'startTime': 1, 'locks': {'x1': {'2': {'firstGrant': 9, 'lockType': <LockType.SHARED: 1>}}, 'x2': {'1': {}, '2': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 16, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x3', 'value': '20', 'pendingSites': [<Site.Site object at 0x7f8d762414e0>], 'writtenSites': []}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 10, 'lockType': <LockType.SHARED: 1>}}, 'x6': {'1': {'firstGrant': 11, 'lockType': <LockType.SHARED: 1>}}, 'x7': {'8': {'firstGrant': 12, 'lockType': <LockType.SHARED: 1>}}, 'x8': {'1': {'firstGrant': 13, 'lockType': <LockType.SHARED: 1>}}, 'x9': {'10': {'firstGrant': 14, 'lockType': <LockType.SHARED: 1>}}, 'x10': {'1': {'firstGrant': 15, 'lockType': <LockType.SHARED: 1>}}, 'x3': {'4': {}}}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x4', 'value': '30', 'pendingSites': [<Site.Site object at 0x7f8d7621be48>], 'writtenSites': ['2', '3', '4', '5', '6', '7', '8', '9', '10']}}, 'startTime': 3, 'locks': {'x3': {'4': {'firstGrant': 6, 'lockType': <LockType.SHARED: 1>}}, 'x4': {'1': {}, '2': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T4': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x5', 'value': '40', 'pendingSites': [<Site.Site object at 0x7f8d76241710>], 'writtenSites': []}}, 'startTime': 4, 'locks': {'x4': {'1': {'firstGrant': 7, 'lockType': <LockType.SHARED: 1>}}, 'x5': {'6': {}}}, 'failed': False}, 'T5': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 5, 'locks': {'x5': {'6': {'firstGrant': 8, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}}
+defaultdict(<class 'list'>, {'T1': [' ', 'x2.1'], 'x1.2': ['T1'], 'x2.1': [' ', 'T2'], 'x2.2': ['T1'], 'x2.3': ['T1'], 'x2.4': ['T1'], 'x2.5': ['T1'], 'x2.6': ['T1'], 'x2.7': ['T1'], 'x2.8': ['T1'], 'x2.9': ['T1'], 'x2.10': ['T1'], 'T2': [' ', 'x3.4'], 'x6.1': ['T2'], 'x7.8': ['T2'], 'x8.1': ['T2'], 'x9.10': ['T2'], 'x10.1': ['T2'], 'x3.4': [' ', 'T3'], 'T3': [' ', 'x4.1'], 'x4.1': [' ', 'T4'], 'x4.2': ['T3'], 'x4.3': ['T3'], 'x4.4': ['T3'], 'x4.5': ['T3'], 'x4.6': ['T3'], 'x4.7': ['T3'], 'x4.8': ['T3'], 'x4.9': ['T3'], 'x4.10': ['T3'], 'T4': [' ', 'x5.6'], 'x5.6': [' ', 'T5'], 'T5': [' ']})
+Cycle? False
 
 end(T4)
 T4 commits
@@ -51,7 +72,7 @@ T1 commits
 
 
 =============================System State=============================
-Current Time = 19
+Current Time = 24
 
 =========================Current Transactions=========================
 Transaction: T5
@@ -60,7 +81,7 @@ Start Time: 5
 Aborted: False
 Locks:
 	x5: 6:SHARED:8
-	x1: 2:EXCLUSIVE:19
+	x1: 2:EXCLUSIVE:24
 Pending Operation: 
 
 ======================================================================
@@ -69,14 +90,13 @@ Pending Operation:
 Site: 1
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x8: :80:0
 	x10: :100:0
@@ -85,20 +105,20 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 2
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x1: T5:EXCLUSIVE
 Waiting Locks:
 	
 All Data:
 	x1: :10:0 T5:50:-1
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x8: :80:0
 	x10: :100:0
@@ -108,19 +128,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 3
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x8: :80:0
 	x10: :100:0
@@ -129,20 +149,20 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 4
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x3: :30:0 T2:20:18
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x3: :30:0 T2:20:23
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x8: :80:0
 	x10: :100:0
@@ -152,19 +172,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 5
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x8: :80:0
 	x10: :100:0
@@ -173,19 +193,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 6
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	x5: T5:SHARED
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x5: :50:0
 	x6: :60:0
 	x8: :80:0
@@ -196,19 +216,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 7
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x8: :80:0
 	x10: :100:0
@@ -217,19 +237,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 8
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x7: :70:0
 	x8: :80:0
@@ -240,19 +260,19 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 9
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x8: :80:0
 	x10: :100:0
@@ -261,19 +281,19 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 10
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
 	
 All Data:
-	x2: :20:0 T1:10:19
-	x4: :40:0 T3:30:17
+	x2: :20:0 T1:10:24
+	x4: :40:0 T3:30:22
 	x6: :60:0
 	x8: :80:0
 	x9: :90:0
@@ -284,7 +304,8 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 ======================================================================
 ======================================================================

@@ -38,27 +38,20 @@ class TransactionManager:
 			print('%s aborts'%transactionName)
 
 		transactionLocks = TransactionManager.transactions[transactionName]['locks']
-		for key in transactionLocks.keys():
+		for key in transactionLocks:
 			commitData = commitValues
-			for site in transactionLocks[key].keys():
+			for site in transactionLocks[key]:
 				commitData = commitData and 'lockType' in transactionLocks[key][site] and transactionLocks[key][site]['lockType'] == LockType.EXCLUSIVE
+
+			for site in transactionLocks[key]:
 				if commitData:
-					SM.sites[site]['site'].DM.commitTransactionKey(transactionName, key, endTime)
+					SM.sites[site]['site'].DM.persistTransactionKey(transactionName, key, endTime)
 				else:
-					SM.sites[site]['site'].DM.abortTransactionKey(transactionName, key, endTime)
+					SM.sites[site]['site'].DM.revertKey(key)
 
-				SM.sites[site]['site'].LM.releaseLock(transactionName, key)
+				SM.sites[site]['site'].LM.releaseLock(transactionName, key, commitData)
 
-			# key_index = int(key[1:])
-			# sites = SM.findSitesForKeyIndex(key_index)
-			# for site in sites:
-			# 	if commitData:
-			# 		site.DM.commitTransactionKey(transactionName, key, endTime)
-			# 	else:
-			# 		site.DM.abortTransactionKey(transactionName, key, endTime)
-
-			# 	site.LM.releaseLock(transactionName, key)
-
+		SM.clearPendingOperationsForTransaction(transactionName)
 		del TransactionManager.transactions[transactionName]
 
 	def shouldTransactionAbort(transaction):
@@ -102,29 +95,29 @@ class TransactionManager:
 		print('======================================================================')
 
 	def dfs_visit(G, u, color, found_cycle):
-		if found_cycle[0]:                          # - Stop dfs if cycle is found.
+		if found_cycle[0]:													# - Stop dfs if cycle is found.
 			return
-		color[u] = "gray"    
+		color[u] = "gray"
 													# - Gray nodes are in the current path
-		for v in G[u]:                              # - Check neighbors, where G[u] is the adjacency list of u.
+		for v in G[u]:															# - Check neighbors, where G[u] is the adjacency list of u.
 			if v.isspace() != True:
-				if color[v] == "gray":                  # - Case where a loop in the current path is present.  
-					found_cycle[0] = True       
+				if color[v] == "gray":									# - Case where a loop in the current path is present.
+					found_cycle[0] = True
 					return
-				if color[v] == "white":                 # - Call dfs_visit recursively.   
+				if color[v] == "white":								 # - Call dfs_visit recursively.	 
 					TransactionManager.dfs_visit(G, v, color, found_cycle)
 		color[u] = "black"
 
-	def cycle_exists(G):                          # - G is a directed graph
+	def cycle_exists(G):													# - G is a directed graph
 		print (G)
-		color = { u : "white" for u in G  }      # - All nodes are initially white
-		found_cycle = [False]                    # - Define found_cycle as a list
+		color = { u : "white" for u in G	}			# - All nodes are initially white
+		found_cycle = [False]										# - Define found_cycle as a list
 										 
-		for u in G:                              # - Visit all nodes
-		   if color[u] == "white":
-			   TransactionManager.dfs_visit(G, u, color, found_cycle)
-		   if found_cycle[0]:
-			   break
+		for u in G:															# - Visit all nodes
+			 if color[u] == "white":
+				 TransactionManager.dfs_visit(G, u, color, found_cycle)
+			 if found_cycle[0]:
+				 break
 		return found_cycle[0]
 
 	def detectDeadlock():
@@ -141,8 +134,6 @@ class TransactionManager:
 						graph[transaction].append(resource)
 						graph[resource].append(' ')
 		print("Cycle?", TransactionManager.cycle_exists(graph))
-
-							   
 
 	def readValue(transactionName, key):
 		# Read from one site
@@ -164,8 +155,13 @@ class TransactionManager:
 			failedSites = []
 
 			for site in sites:
+				DM = SM.sites[site.site]['site'].DM
+				print('Site %s: replicated key: %s, last commit on site: %s, site start time: %s, Transaction start time: %s'%(site.site, key_index % 2 == 0, DM.getLastCommitTime(key), SM.sites[site.site]['startTime'], TransactionManager.transactions[transactionName]['startTime']))
 				if SM.sites[site.site]['available'] == False:
 					failedSites.append(site)
+				# elif key_index % 2 == 0 and (DM.getLastCommitTime(key) < SM.sites[site.site]['startTime'] or DM.getLastCommitTime(key) > TransactionManager.transactions[transactionName]['startTime']):
+				# 	print('nisargthakkar readOnly pending')
+				# 	continue
 				else:
 					TransactionManager.doPendingOperation(transactionName, site.site)
 					break
@@ -198,10 +194,6 @@ class TransactionManager:
 			else:
 				TransactionManager.transactions[transactionName]['locks'][key][site.site] = {}
 				site.LM.requestLock(transactionName, key, LockType.SHARED)
-				# # Check if operation done. Check if lock granted. since we are doing everything sequentially
-				# if key in TransactionManager.transactions[transactionName]['locks'] and site.site in TransactionManager.transactions[transactionName]['locks'][key] and 'lockType' in TransactionManager.transactions[transactionName]['locks'][key][site.site]:
-				# 	# TODO: Anything to do here?
-				# 	pass
 				break
 
 		# If all sites have failed
@@ -277,6 +269,7 @@ class TransactionManager:
 		pendingOperation = TransactionManager.transactions[transactionName]['pendingOperation']
 
 		key = pendingOperation['options']['key']
+		key_index = int(key[1:])
 
 		clearOp = True
 		if pendingOperation['operation'] == Operation.READ and TransactionManager.transactions[transactionName]['readOnly']:
@@ -299,6 +292,7 @@ class TransactionManager:
 
 	def notifySiteFailed(site):
 		SM = DatabaseManager.DatabaseManager.SM
+		SM.sites[site]['pendingOperations'] = []
 		for transaction in TransactionManager.transactions:
 			transactionFailed = False
 			transactionDetails = TransactionManager.transactions[transaction]
@@ -311,7 +305,7 @@ class TransactionManager:
 					elif site == lockSite:
 						# Transaction was waiting for a lock on site
 						if key not in TransactionManager.transactions[transaction]['locks']:
-							TransactionManager.transactions[transaction]['locks'][key][site.site] = {}
+							TransactionManager.transactions[transaction]['locks'][key][site] = {}
 
 						SM.sites[site]['pendingOperations'].append(TransactionManager._getSitePendingOperationFromTransaction(transaction))
 
@@ -319,6 +313,15 @@ class TransactionManager:
 					break
 
 			if transactionFailed:
+				# Abort transaction
+				transactionLocks = transactionDetails['locks']
+				for key in transactionLocks:
+					for site in transactionLocks[key]:
+						SM.sites[site]['site'].DM.revertKey(key)
+						SM.sites[site]['site'].LM.releaseLock(transaction, key, False)
+				
+				transactionDetails['locks'] = {}
+				
 				TransactionManager.transactions[transaction]['pendingOperation'] = {
 					'operation': Operation.NONE,
 					'options': {}

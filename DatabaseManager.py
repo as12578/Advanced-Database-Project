@@ -9,7 +9,7 @@ class DatabaseManager:
 		DatabaseManager.SM.init(time)
 
 	def dumpAll():
-		for site in DatabaseManager.SM.sites.keys():
+		for site in DatabaseManager.SM.sites:
 			DatabaseManager.SM.sites[site]['site'].DM.dump()
 
 	def dumpKey(key):

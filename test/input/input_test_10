@@ -4,18 +4,22 @@ begin(T2)
 fail(2)
 # Will write to all sites except 2
 W(T2, x2, 1010)
+# Will wait for site 2 to recover
+W(T1, x1, 2)
 querystate()
+# Should let T1 write 2
 recover(2)
-# Should allow T2 to read x1 since it is an unreplicated variable
+querystate()
+# Should not allow T2 to read x1 since T1 has a write lock
 R(T2, x1)
 querystate()
 begin(T3)
 # Write x1
-W(T3, x1, 5)
-querystate()
-# Now let T1 write x1 = 2
-end(T3)
+W(T3, x1, 5) wait for lock
 querystate()
 # Now let T2 read x1 = 2
 end(T1)
+querystate()
 end(T2)
+# Now let T3 write x1 = 5
+end(T3)

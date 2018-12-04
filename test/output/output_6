@@ -25,6 +25,10 @@ recover(4)
 recover(3)
 
 R(T2,x3)
+{'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {'x8': {'1': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}, '2': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}}
+defaultdict(<class 'list'>, {'T2': [' '], 'x8.1': ['T2'], 'x8.2': ['T2'], 'x8.5': ['T2'], 'x8.6': ['T2'], 'x8.7': ['T2'], 'x8.8': ['T2'], 'x8.9': ['T2'], 'x8.10': ['T2']})
+Cycle? False
+T2 - x3: 30
 
 end(T2)
 T2 commits
@@ -52,7 +56,6 @@ Current Time = 12
 Site: 1
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -68,12 +71,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 2
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -91,12 +94,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 3
 Start Time: 9
 Available: True
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -112,12 +115,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 4
 Start Time: 8
 Available: True
-Stable: False
 Granted Locks:
 	
 Waiting Locks:
@@ -135,12 +138,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: T2: Read x3
+Pending Operations:
+
 
 Site: 5
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -156,12 +159,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 6
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -179,12 +182,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 7
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -200,12 +203,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 8
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -223,12 +226,12 @@ All Data:
 	x17: :170:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 9
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -244,12 +247,12 @@ All Data:
 	x16: :160:0
 	x18: :180:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 Site: 10
 Start Time: 0
 Available: True
-Stable: True
 Granted Locks:
 	
 Waiting Locks:
@@ -267,7 +270,8 @@ All Data:
 	x18: :180:0
 	x19: :190:0
 	x20: :200:0
-Pending Operations: 
+Pending Operations:
+
 
 ======================================================================
 ======================================================================
