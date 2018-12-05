@@ -25,8 +25,6 @@ class TransactionManager:
 			}
 
 	def endTransaction(transactionName, endTime):
-		SM = DatabaseManager.DatabaseManager.SM
-
 		commitValues = False
 
 		if not TransactionManager.shouldTransactionAbort(transactionName):
@@ -34,25 +32,40 @@ class TransactionManager:
 
 		if commitValues:
 			print('%s commits'%transactionName)
+			TransactionManager.commitTransaction(transactionName, endTime)
 		else:
 			print('%s aborts'%transactionName)
+			TransactionManager.abortTransaction(transactionName)
 
-		transactionLocks = TransactionManager.transactions[transactionName]['locks']
+	def commitTransaction(transaction, endTime):
+		SM = DatabaseManager.DatabaseManager.SM
+		transactionLocks = TransactionManager.transactions[transaction]['locks']
 		for key in transactionLocks:
-			commitData = commitValues
+			commitData = True
 			for site in transactionLocks[key]:
 				commitData = commitData and 'lockType' in transactionLocks[key][site] and transactionLocks[key][site]['lockType'] == LockType.EXCLUSIVE
 
 			for site in transactionLocks[key]:
 				if commitData:
-					SM.sites[site]['site'].DM.persistTransactionKey(transactionName, key, endTime)
+					SM.sites[site]['site'].DM.persistTransactionKey(transaction, key, endTime)
 				else:
 					SM.sites[site]['site'].DM.revertKey(key)
 
-				SM.sites[site]['site'].LM.releaseLock(transactionName, key, commitData)
+				SM.sites[site]['site'].LM.releaseLock(transaction, key, commitData)
 
-		SM.clearPendingOperationsForTransaction(transactionName)
-		del TransactionManager.transactions[transactionName]
+		SM.clearPendingOperationsForTransaction(transaction)
+		del TransactionManager.transactions[transaction]
+
+	def abortTransaction(transaction):
+		SM = DatabaseManager.DatabaseManager.SM
+		transactionLocks = TransactionManager.transactions[transaction]['locks']
+		for key in transactionLocks:
+			for site in transactionLocks[key]:
+				SM.sites[site]['site'].DM.revertKey(key)
+				SM.sites[site]['site'].LM.releaseLock(transaction, key, commitData)
+
+		SM.clearPendingOperationsForTransaction(transaction)
+		del TransactionManager.transactions[transaction]
 
 	def shouldTransactionAbort(transaction):
 		if TransactionManager.transactions[transaction]['failed']:
