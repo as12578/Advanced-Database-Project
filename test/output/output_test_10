@@ -19,7 +19,7 @@ Read Only: False
 Start Time: 2
 Aborted: False
 Locks:
-	x2: 1:EXCLUSIVE:4   3:EXCLUSIVE:4   4:EXCLUSIVE:4   5:EXCLUSIVE:4   6:EXCLUSIVE:4   7:EXCLUSIVE:4   8:EXCLUSIVE:4   9:EXCLUSIVE:4   10:EXCLUSIVE:4
+	x2: 1:EXCLUSIVE:4	 3:EXCLUSIVE:4	 4:EXCLUSIVE:4	 5:EXCLUSIVE:4	 6:EXCLUSIVE:4	 7:EXCLUSIVE:4	 8:EXCLUSIVE:4	 9:EXCLUSIVE:4	 10:EXCLUSIVE:4
 Pending Operation: 
 
 ======================================================================
@@ -265,7 +265,7 @@ Read Only: False
 Start Time: 2
 Aborted: False
 Locks:
-	x2: 1:EXCLUSIVE:4   3:EXCLUSIVE:4   4:EXCLUSIVE:4   5:EXCLUSIVE:4   6:EXCLUSIVE:4   7:EXCLUSIVE:4   8:EXCLUSIVE:4   9:EXCLUSIVE:4   10:EXCLUSIVE:4
+	x2: 1:EXCLUSIVE:4	 3:EXCLUSIVE:4	 4:EXCLUSIVE:4	 5:EXCLUSIVE:4	 6:EXCLUSIVE:4	 7:EXCLUSIVE:4	 8:EXCLUSIVE:4	 9:EXCLUSIVE:4	 10:EXCLUSIVE:4
 Pending Operation: 
 
 ======================================================================
@@ -511,7 +511,7 @@ Read Only: False
 Start Time: 2
 Aborted: False
 Locks:
-	x2: 1:EXCLUSIVE:4   3:EXCLUSIVE:4   4:EXCLUSIVE:4   5:EXCLUSIVE:4   6:EXCLUSIVE:4   7:EXCLUSIVE:4   8:EXCLUSIVE:4   9:EXCLUSIVE:4   10:EXCLUSIVE:4
+	x2: 1:EXCLUSIVE:4	 3:EXCLUSIVE:4	 4:EXCLUSIVE:4	 5:EXCLUSIVE:4	 6:EXCLUSIVE:4	 7:EXCLUSIVE:4	 8:EXCLUSIVE:4	 9:EXCLUSIVE:4	 10:EXCLUSIVE:4
 	x1: 
 Pending Operation: Read x1
 
@@ -758,7 +758,7 @@ Read Only: False
 Start Time: 2
 Aborted: False
 Locks:
-	x2: 1:EXCLUSIVE:4   3:EXCLUSIVE:4   4:EXCLUSIVE:4   5:EXCLUSIVE:4   6:EXCLUSIVE:4   7:EXCLUSIVE:4   8:EXCLUSIVE:4   9:EXCLUSIVE:4   10:EXCLUSIVE:4
+	x2: 1:EXCLUSIVE:4	 3:EXCLUSIVE:4	 4:EXCLUSIVE:4	 5:EXCLUSIVE:4	 6:EXCLUSIVE:4	 7:EXCLUSIVE:4	 8:EXCLUSIVE:4	 9:EXCLUSIVE:4	 10:EXCLUSIVE:4
 	x1: 
 Pending Operation: Read x1
 
@@ -998,9 +998,8 @@ Pending Operations:
 
 ======================================================================
 ======================================================================
-{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x1': {'2': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x1'}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}}, 'x1': {'2': {}}}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x1', 'value': '5)waitforloc', 'pendingSites': [<Site.Site object at 0x7f429b8b4f98>], 'writtenSites': []}}, 'startTime': 8, 'locks': {'x1': {'2': {}}}, 'failed': False}}
+{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x1': {'2': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x1'}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}}, 'x1': {'2': {}}}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.WRITE: 2>, 'options': {'key': 'x1', 'value': '5)waitforloc', 'pendingSites': [<Site.Site object at 0x7fc4c24c4048>], 'writtenSites': []}}, 'startTime': 8, 'locks': {'x1': {'2': {}}}, 'failed': False}}
 defaultdict(<class 'list'>, {'T1': [' '], 'x1.2': ['T1', ' ', ' '], 'T2': [' ', 'x1.2'], 'x2.1': ['T2'], 'x2.3': ['T2'], 'x2.4': ['T2'], 'x2.5': ['T2'], 'x2.6': ['T2'], 'x2.7': ['T2'], 'x2.8': ['T2'], 'x2.9': ['T2'], 'x2.10': ['T2'], 'T3': [' ', 'x1.2']})
-Cycle? False
 T1 commits
 T2 - x1: 2
 
@@ -1013,7 +1012,7 @@ Read Only: False
 Start Time: 2
 Aborted: False
 Locks:
-	x2: 1:EXCLUSIVE:4   3:EXCLUSIVE:4   4:EXCLUSIVE:4   5:EXCLUSIVE:4   6:EXCLUSIVE:4   7:EXCLUSIVE:4   8:EXCLUSIVE:4   9:EXCLUSIVE:4   10:EXCLUSIVE:4
+	x2: 1:EXCLUSIVE:4	 3:EXCLUSIVE:4	 4:EXCLUSIVE:4	 5:EXCLUSIVE:4	 6:EXCLUSIVE:4	 7:EXCLUSIVE:4	 8:EXCLUSIVE:4	 9:EXCLUSIVE:4	 10:EXCLUSIVE:4
 	x1: 2:SHARED:10
 Pending Operation: 
 

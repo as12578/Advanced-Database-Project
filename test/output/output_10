@@ -4,5 +4,4 @@ T3 commits
 T1 - x2: 22
 {'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x2': {'1': {'firstGrant': 9, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}}
 defaultdict(<class 'list'>, {'T1': [' '], 'x2.1': ['T1']})
-Cycle? False
 T1 commits
