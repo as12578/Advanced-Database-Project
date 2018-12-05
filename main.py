@@ -18,17 +18,31 @@ def printState(DBM):
 	print('======================================================================')
 
 if __name__ == '__main__':
+
+	inputSource = sys.stdin
+
+	if len(sys.argv) > 1:
+		f = open(sys.argv[1], 'r')
+		if f.mode == 'r':
+			inputSource = f.readlines()
+
 	DBM = DatabaseManager.DatabaseManager
 	TM = DBM.TM
 	SM = DBM.SM
 
 	bootstrap(DBM)
 
-	for originalLine in sys.stdin:
+	for originalLine in inputSource:
 		line = ''.join(filter(lambda c: c != ' ' and c != '\t' and c != '\n' and c is not None, originalLine))
-		print(originalLine.strip())
+		# print(originalLine.strip())
 
-		if line.startswith('#'):
+		indexOfCommentStart = line.find('//')
+
+		if indexOfCommentStart != -1:
+			line = line[:indexOfCommentStart]
+
+		# Was a comment line
+		if line == '' and indexOfCommentStart != -1:
 			continue
 
 
@@ -108,6 +122,6 @@ if __name__ == '__main__':
 			Timer.CURRENT_TIME -= 1
 			print('Invalid Command')
 
-		print()
+		# print()
 
-	printState(DBM)
+	# printState(DBM)

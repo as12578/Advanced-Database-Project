@@ -1,21 +1,21 @@
-# Test Waiting for site to recover
+// Test Waiting for site to recover
 begin(T1)
 begin(T2)
 fail(2)
-# Will write to all sites except 2
+// Will write to all sites except 2
 W(T2, x2, 1010)
 querystate()
 recover(2)
-# Should allow T2 to read x1 since it is an unreplicated variable
+// Should allow T2 to read x1 since it is an unreplicated variable
 R(T2, x1)
 querystate()
 begin(T3)
-# Write x1
+// Write x1
 W(T3, x1, 5)
 querystate()
-# Now let T1 write x1 = 2
+// Now let T1 write x1 = 2
 end(T3)
 querystate()
-# Now let T2 read x1 = 2
+// Now let T2 read x1 = 2
 end(T1)
 end(T2)

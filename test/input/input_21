@@ -1,7 +1,7 @@
-# Test 21
-# From a student in 2017
-# T2 will try to promote its read lock to a write lock but can't
-# So there is a deadlock. T2 is younger so will abort.
+// Test 21
+// From a student in 2017
+// T2 will try to promote its read lock to a write lock but can't
+// So there is a deadlock. T2 is younger so will abort.
 begin(T1)
 begin(T2)
 R(T2, x2)

@@ -1,5 +1,5 @@
-# Test 12
-# both commit
+// Test 12
+// both commit
 begin(T1)
 begin(T2)
 R(T1,x2)

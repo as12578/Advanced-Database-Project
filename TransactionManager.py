@@ -179,7 +179,7 @@ class TransactionManager:
 					})
 
 			if len(unstableSites) == len(sites):
-				# TODO: Abort transaction?
+				# TODO: Transaction keeps waiting
 				pass
 
 			return

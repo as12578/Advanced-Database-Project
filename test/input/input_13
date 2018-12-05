@@ -1,5 +1,5 @@
-# Test 13
-# T1 and T2 wait but eventually commit
+// Test 13
+// T1 and T2 wait but eventually commit
 begin(T1)
 begin(T2)
 begin(T3)

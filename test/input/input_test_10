@@ -1,25 +1,25 @@
-# Test Waiting for site to recover
+// Test Waiting for site to recover
 begin(T1)
 begin(T2)
 fail(2)
-# Will write to all sites except 2
+// Will write to all sites except 2
 W(T2, x2, 1010)
-# Will wait for site 2 to recover
+// Will wait for site 2 to recover
 W(T1, x1, 2)
 querystate()
-# Should let T1 write 2
+// Should let T1 write 2
 recover(2)
 querystate()
-# Should not allow T2 to read x1 since T1 has a write lock
+// Should not allow T2 to read x1 since T1 has a write lock
 R(T2, x1)
 querystate()
 begin(T3)
-# Write x1
+// Write x1
 W(T3, x1, 5) wait for lock
 querystate()
-# Now let T2 read x1 = 2
+// Now let T2 read x1 = 2
 end(T1)
 querystate()
 end(T2)
-# Now let T3 write x1 = 5
+// Now let T3 write x1 = 5
 end(T3)

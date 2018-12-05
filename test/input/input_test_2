@@ -1,4 +1,4 @@
-# Transaction Aborts
+// Transaction Aborts
 begin(T1)
 W(T1, x1, 201)
 fail(2)
