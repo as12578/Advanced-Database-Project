@@ -1,3 +1,5 @@
+import SiteManager
+
 class DataManager:
 	def __init__(self, site):
 		self.data = {}
@@ -68,3 +70,12 @@ class DataManager:
 
 	def getLastCommitTime(self, key):
 		return self.data[key][self.committed[key]]['committedTime']
+
+	def getFirstCommitTimeSinceStart(self, key):
+		SM = SiteManager.SiteManager
+		committedValuesSinceStartup = list(filter(lambda data: data['committedTime'] >= SM.sites[self.site]['startTime'], self.data[key]))
+
+		if len(committedValuesSinceStartup) == 0:
+			return -1
+
+		return committedValuesSinceStartup[0]['committedTime']

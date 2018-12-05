@@ -153,15 +153,16 @@ class TransactionManager:
 
 		if TransactionManager.transactions[transactionName]['readOnly']:
 			failedSites = []
+			unstableSites = []
 
 			for site in sites:
 				DM = SM.sites[site.site]['site'].DM
-				print('Site %s: replicated key: %s, last commit on site: %s, site start time: %s, Transaction start time: %s'%(site.site, key_index % 2 == 0, DM.getLastCommitTime(key), SM.sites[site.site]['startTime'], TransactionManager.transactions[transactionName]['startTime']))
 				if SM.sites[site.site]['available'] == False:
 					failedSites.append(site)
-				# elif key_index % 2 == 0 and (DM.getLastCommitTime(key) < SM.sites[site.site]['startTime'] or DM.getLastCommitTime(key) > TransactionManager.transactions[transactionName]['startTime']):
-				# 	print('nisargthakkar readOnly pending')
-				# 	continue
+				elif key_index % 2 == 0 and (DM.getLastCommitTime(key) < SM.sites[site.site]['startTime'] or DM.getFirstCommitTimeSinceStart(key) > TransactionManager.transactions[transactionName]['startTime']):
+					# TODO: check if all sites unstable
+					unstableSites.append(site)
+					continue
 				else:
 					TransactionManager.doPendingOperation(transactionName, site.site)
 					break
@@ -176,6 +177,10 @@ class TransactionManager:
 							'key': key
 						}
 					})
+
+			if len(unstableSites) == len(sites):
+				# TODO: Abort transaction?
+				pass
 
 			return
 
@@ -319,9 +324,9 @@ class TransactionManager:
 					for site in transactionLocks[key]:
 						SM.sites[site]['site'].DM.revertKey(key)
 						SM.sites[site]['site'].LM.releaseLock(transaction, key, False)
-				
+
 				transactionDetails['locks'] = {}
-				
+
 				TransactionManager.transactions[transaction]['pendingOperation'] = {
 					'operation': Operation.NONE,
 					'options': {}

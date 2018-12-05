@@ -28,8 +28,7 @@ R(T2, x2)
 {'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 6, 'locks': {}, 'failed': False}}
 defaultdict(<class 'list'>, {'T2': [' ']})
 Cycle? False
-Site 1: replicated key: True, last commit on site: 9, site start time: 7, Transaction start time: 6
-T2 - x2: 20
+T2 - x2: 100
 
 # Should Read only transactions be allowed to read from sites which haven't committed a value after they started and before the read only transaction began?
 
