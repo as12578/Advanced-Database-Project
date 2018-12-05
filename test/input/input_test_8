@@ -1,17 +1,17 @@
-# Read-only txn read replicated data from site which have committed data since it started?
+// Read-only txn read replicated data from site which have committed data since it started?
 begin(T1)
 begin(T3)
 fail(1)
-# Write to sites 2-10
+// Write to sites 2-10
 W(T1, x2, 100)
-# Commit
+// Commit
 end(T1)
 beginRO(T2)
 recover(1)
-# Write to all sites
+// Write to all sites
 W(T3, x2, 200)
-# commit
+// commit
 end(T3)
-# Allow read from site 1?
+// Allow read from site 1?
 R(T2, x2)
-# Should Read only transactions be allowed to read from sites which haven't committed a value after they started and before the read only transaction began?
+// Should Read only transactions be allowed to read from sites which haven't committed a value after they started and before the read only transaction began?

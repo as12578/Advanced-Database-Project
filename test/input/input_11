@@ -1,5 +1,5 @@
-# Test 11
-# All should commit
+// Test 11
+// All should commit
 begin(T1)
 begin(T2)
 R(T1,x2)

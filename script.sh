@@ -7,6 +7,7 @@ REPROUNZIPPED_CHROOT="reprounzipped_chroot"
 
 USE_REPROUNZIP_DIR=1
 USE_REPROUNZIP_CHROOT=0
+CLEANUP=1
 
 rm ${REPROZIPPED_FILE}
 reprozip trace --overwrite test/runit.sh
@@ -49,5 +50,11 @@ for test in ${INS}; do
 		${DIFFCMD} ${DARGS} ${REPROUNZIPPED_CHROOT}/root/${CURRENT_DIR}/${OUTPUT_FILE} ${OUTPUT_FILE} >> ${CHROOT_LOG}
 	fi
 done
+
+if [ $CLEANUP -eq 1 ]; then
+	rm -rf .reprozip-trace/
+	rm -rf ${REPROUNZIPPED_DIR}
+	rm -rf *_LOG
+fi
 
 set +x

@@ -1,45 +1,10 @@
-# No fail/recover/abort
-begin(T1)
-
-beginRO(T2)
-
-begin(T3)
-
-begin(T4)
-
-# Read x1 = 10
-R(T1,x1)
 T1 - x1: 10
-
-# Write x1 = 101
-W(T1,x1,101)
-
-# T3 will wait for T1 on x1
-R(T3, x1)
-
-# Read 101
-R(T1,x1)
 T1 - x1: 101
-
-# Wait for T3 on x1
-R(T4, x1)
-
-# Write x2 = 102
-W(T1,x2,102)
 {'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x1': {'2': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x1'}}, 'startTime': 3, 'locks': {'x1': {'2': {}}}, 'failed': False}, 'T4': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x1'}}, 'startTime': 4, 'locks': {'x1': {'2': {}}}, 'failed': False}}
 defaultdict(<class 'list'>, {'T1': [' '], 'x1.2': ['T1', ' ', ' '], 'T2': [' '], 'T3': [' ', 'x1.2'], 'T4': [' ', 'x1.2']})
 Cycle? False
-
-# Read 102
-R(T1,x2)
 T1 - x2: 102
-
-# T2 Will use MVRC for x1. Should read 10
-R(T2,x1)
 T2 - x1: 10
-
-# Committed value still 20
-dump(x2)
 Site 1 - x2: 20
 Site 2 - x2: 20
 Site 3 - x2: 20
@@ -50,44 +15,18 @@ Site 7 - x2: 20
 Site 8 - x2: 20
 Site 9 - x2: 20
 Site 10 - x2: 20
-
-# T1 commits. T3, T4 wil read x1: Should read 101
-end(T1)
 T1 commits
 T3 - x1: 101
 T4 - x1: 101
-
-# T2 Will use MVRC for x1. Should read 10
-R(T2,x1)
 T2 - x1: 10
-
-# T3 wil read x2: Should read 102
-R(T3, x2)
 T3 - x2: 102
-
-# T3 will wait since 2 transactions hold shared lock
-W(T3, x1, 150)
-
-# T4 commits. T3 will write
-end(T4)
 T4 commits
-
-# T3 will read 150
-R(T3, x1)
 T3 - x1: 150
-
-# T3 commits
-end(T3)
 {'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 3, 'locks': {'x1': {'2': {'firstGrant': 18, 'lockType': <LockType.EXCLUSIVE: 2>}}, 'x2': {'1': {'firstGrant': 16, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}}
 defaultdict(<class 'list'>, {'T2': [' '], 'T3': [' '], 'x1.2': ['T3'], 'x2.1': ['T3']})
 Cycle? False
 T3 commits
-
-# T2 commits
-end(T2)
 T2 commits
-
-dump()
 Site 1 - x2: 102 x4: 40 x6: 60 x8: 80 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
 Site 2 - x1: 150 x2: 102 x4: 40 x6: 60 x8: 80 x10: 100 x11: 110 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
 Site 3 - x2: 102 x4: 40 x6: 60 x8: 80 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
@@ -98,11 +37,7 @@ Site 7 - x2: 102 x4: 40 x6: 60 x8: 80 x10: 100 x12: 120 x14: 140 x16: 160 x18: 1
 Site 8 - x2: 102 x4: 40 x6: 60 x7: 70 x8: 80 x10: 100 x12: 120 x14: 140 x16: 160 x17: 170 x18: 180 x20: 200
 Site 9 - x2: 102 x4: 40 x6: 60 x8: 80 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
 Site 10 - x2: 102 x4: 40 x6: 60 x8: 80 x9: 90 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x19: 190 x20: 200
-
-dump(x1)
 Site 2 - x1: 150
-
-dump(x2)
 Site 1 - x2: 102
 Site 2 - x2: 102
 Site 3 - x2: 102
@@ -113,237 +48,4 @@ Site 7 - x2: 102
 Site 8 - x2: 102
 Site 9 - x2: 102
 Site 10 - x2: 102
-
-dump(5)
 Site 5 - x2: 102 x4: 40 x6: 60 x8: 80 x10: 100 x12: 120 x14: 140 x16: 160 x18: 180 x20: 200
-
-
-=============================System State=============================
-Current Time = 25
-
-=========================Current Transactions=========================
-======================================================================
-
-============================All Site State============================
-Site: 1
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x6: :60:0
-	x8: :80:0
-	x10: :100:0
-	x12: :120:0
-	x14: :140:0
-	x16: :160:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 2
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x1: :10:0 T1:101:14 T3:150:20
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x6: :60:0
-	x8: :80:0
-	x10: :100:0
-	x11: :110:0
-	x12: :120:0
-	x14: :140:0
-	x16: :160:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 3
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x6: :60:0
-	x8: :80:0
-	x10: :100:0
-	x12: :120:0
-	x14: :140:0
-	x16: :160:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 4
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x3: :30:0
-	x4: :40:0
-	x6: :60:0
-	x8: :80:0
-	x10: :100:0
-	x12: :120:0
-	x13: :130:0
-	x14: :140:0
-	x16: :160:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 5
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x6: :60:0
-	x8: :80:0
-	x10: :100:0
-	x12: :120:0
-	x14: :140:0
-	x16: :160:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 6
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x5: :50:0
-	x6: :60:0
-	x8: :80:0
-	x10: :100:0
-	x12: :120:0
-	x14: :140:0
-	x15: :150:0
-	x16: :160:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 7
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x6: :60:0
-	x8: :80:0
-	x10: :100:0
-	x12: :120:0
-	x14: :140:0
-	x16: :160:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 8
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x6: :60:0
-	x7: :70:0
-	x8: :80:0
-	x10: :100:0
-	x12: :120:0
-	x14: :140:0
-	x16: :160:0
-	x17: :170:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 9
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x6: :60:0
-	x8: :80:0
-	x10: :100:0
-	x12: :120:0
-	x14: :140:0
-	x16: :160:0
-	x18: :180:0
-	x20: :200:0
-Pending Operations:
-
-
-Site: 10
-Start Time: 0
-Available: True
-Granted Locks:
-	
-Waiting Locks:
-	
-All Data:
-	x2: :20:0 T1:102:14
-	x4: :40:0
-	x6: :60:0
-	x8: :80:0
-	x9: :90:0
-	x10: :100:0
-	x12: :120:0
-	x14: :140:0
-	x16: :160:0
-	x18: :180:0
-	x19: :190:0
-	x20: :200:0
-Pending Operations:
-
-
-======================================================================
-======================================================================
