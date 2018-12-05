@@ -2,7 +2,6 @@ T1 aborts
 T3 commits
 {'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}}
 defaultdict(<class 'list'>, {'T2': [' ']})
-Cycle? False
 
 =============================System State=============================
 Current Time = 19
@@ -243,7 +242,6 @@ Pending Operations:
 ======================================================================
 {'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x2'}}, 'startTime': 2, 'locks': {'x2': {'1': {}}}, 'failed': False}}
 defaultdict(<class 'list'>, {'T2': [' ', 'x2.1'], 'x2.1': [' ']})
-Cycle? False
 
 =============================System State=============================
 Current Time = 21

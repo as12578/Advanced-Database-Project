@@ -3,6 +3,5 @@ T3 - x3: 44
 T3 aborts
 {'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}}
 defaultdict(<class 'list'>, {'T1': [' ']})
-Cycle? False
 T1 - x2: 20
 T1 commits

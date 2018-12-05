@@ -101,37 +101,45 @@ class TransactionManager:
 			print('Start Time:', TransactionManager.transactions[transaction]['startTime'])
 			print('Aborted:', TransactionManager.transactions[transaction]['failed'])
 			lockObj = TransactionManager.transactions[transaction]['locks']
-			print('Locks:\n\t%s'%'\n\t'.join(map(lambda key: key + ': ' + '   '.join(map(lambda site: ':'.join([site, lockObj[key][site]['lockType'].name, '%d'%lockObj[key][site]['firstGrant']]), filter(lambda site: 'lockType' in lockObj[key][site], lockObj[key]))), lockObj)))
+			print('Locks:\n\t%s'%'\n\t'.join(map(lambda key: key + ': ' + '	 '.join(map(lambda site: ':'.join([site, lockObj[key][site]['lockType'].name, '%d'%lockObj[key][site]['firstGrant']]), filter(lambda site: 'lockType' in lockObj[key][site], lockObj[key]))), lockObj)))
 			print('Pending Operation:', TransactionManager._pendingOperationToString(TransactionManager.transactions[transaction]['pendingOperation']))
 			print()
 
 		print('======================================================================')
 
 	def dfs_visit(G, u, color, found_cycle):
+		list1 = list()
 		if found_cycle[0]:													# - Stop dfs if cycle is found.
 			return
 		color[u] = "gray"
-													# - Gray nodes are in the current path
+		list1.append(u)															# - Gray nodes are in the current path
 		for v in G[u]:															# - Check neighbors, where G[u] is the adjacency list of u.
 			if v.isspace() != True:
 				if color[v] == "gray":									# - Case where a loop in the current path is present.
 					found_cycle[0] = True
+					if list1.index(v)>0:
+						idx = int(list1.index(v))
+						del list1[0:idx]
+						TransactionManager.cycle_nodes = list1
 					return
-				if color[v] == "white":								 # - Call dfs_visit recursively.	 
+				if color[v] == "white":								 # - Call dfs_visit recursively.
 					TransactionManager.dfs_visit(G, v, color, found_cycle)
 		color[u] = "black"
+		list1.remove(u)
+
 
 	def cycle_exists(G):													# - G is a directed graph
 		print (G)
-		color = { u : "white" for u in G	}			# - All nodes are initially white
+		color = { u : "white" for u in G}			# - All nodes are initially white
 		found_cycle = [False]										# - Define found_cycle as a list
-										 
+
 		for u in G:															# - Visit all nodes
 			 if color[u] == "white":
 				 TransactionManager.dfs_visit(G, u, color, found_cycle)
 			 if found_cycle[0]:
 				 break
 		return found_cycle[0]
+
 
 	def detectDeadlock():
 		print (TransactionManager.transactions)
@@ -146,7 +154,14 @@ class TransactionManager:
 					else:
 						graph[transaction].append(resource)
 						graph[resource].append(' ')
-		print("Cycle?", TransactionManager.cycle_exists(graph))
+		#print("Cycle?", TransactionManager.cycle_exists(graph))
+		if TransactionManager.cycle_exists(graph):
+			filter(lambda k: 'T' in k, TransactionManager.cycle_nodes)	 #list with only transactions in cycle
+			cycle_transaction = dict([(k,TransactionManager.transactions[k]) for k in TransactionManager.cycle_nodes])
+			#dict(filter(lambda x: x in TransactionManager.cycle_nodes ))
+			#for transaction in list1:
+				# if transaction in TransactionManager.transactions:
+					# x = TransactionManager.transactions[transaction]['startTime']
 
 	def readValue(transactionName, key):
 		# Read from one site

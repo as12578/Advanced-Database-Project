@@ -510,5 +510,4 @@ Pending Operations:
 ======================================================================
 {'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 3, 'locks': {'x1': {'2': {'firstGrant': 9, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}}
 defaultdict(<class 'list'>, {'T2': [' '], 'T3': [' '], 'x1.2': ['T3']})
-Cycle? False
 T3 commits
