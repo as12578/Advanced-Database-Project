@@ -6,6 +6,9 @@ class DataManager:
 		self.site = site
 		self.committed = {}
 
+	def keyStrKey(keyStr):
+		return int(keyStr[1:])
+
 	def initValue(self, key, value):
 		self.data[key] = [{
 			'transaction': '',
@@ -27,7 +30,9 @@ class DataManager:
 
 	def dump(self):
 		dumpOut = 'Site %s - ' % (self.site)
-		for key in self.data:
+		keysUnordered = self.data.keys()
+		keysOrdered = sorted(keysUnordered, key=DataManager.keyStrKey)
+		for key in keysOrdered:
 			lastCommittedIndex = self.committed[key]
 			dumpOut += '%s: %s ' % (key, self.data[key][lastCommittedIndex]['value'])
 		print(dumpOut.strip())
