@@ -107,7 +107,7 @@ class TransactionManager:
 			print('Start Time:', TransactionManager.transactions[transaction]['startTime'])
 			print('Aborted:', TransactionManager.transactions[transaction]['failed'])
 			lockObj = TransactionManager.transactions[transaction]['locks']
-			print('Locks:\n\t%s'%'\n\t'.join(map(lambda key: key + ': ' + '	 '.join(map(lambda site: ':'.join([site, lockObj[key][site]['lockType'].name, '%d'%lockObj[key][site]['firstGrant']]), filter(lambda site: 'lockType' in lockObj[key][site], lockObj[key]))), lockObj)))
+			print('Locks:\n\t%s'%'\n\t'.join(map(lambda key: key + ': ' + '   '.join(map(lambda site: ':'.join([site, lockObj[key][site]['lockType'].name, '%d'%lockObj[key][site]['firstGrant']]), filter(lambda site: 'lockType' in lockObj[key][site], lockObj[key]))), lockObj)))
 			print('Pending Operation:', TransactionManager._pendingOperationToString(TransactionManager.transactions[transaction]['pendingOperation']))
 			print()
 
@@ -126,15 +126,18 @@ class TransactionManager:
 					if list1.index(v) > 0:
 						idx = int(list1.index(v))
 						del list1[0:idx]
-						TransactionManager.cycle_nodes = list1[:]
+						# TransactionManager.cycle_nodes = list1[:]
 						# print("list1",list1)
 					TransactionManager.cycle_nodes = list1[:]
+					# print("list1",list1)
 					# print("cycle_nodes1",TransactionManager.cycle_nodes)
 					return
 				if color[v] == "white":								# - Call dfs_visit recursively.
 					TransactionManager.dfs_visit(G, v, color, found_cycle)
 		color[u] = "black"
-		list1.remove(u)
+		# print("u to remove", u)
+		if u in list1:
+			list1.remove(u)
 		#print("cycle_nodes2",TransactionManager.cycle_nodes)
 
 
