@@ -998,7 +998,5 @@ Pending Operations:
 
 ======================================================================
 ======================================================================
-{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {}, 'failed': False}, 'T2': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {'x2': {'1': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '3': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '4': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '5': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '6': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '7': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '8': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '9': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}, '10': {'firstGrant': 4, 'lockType': <LockType.EXCLUSIVE: 2>}}, 'x1': {'2': {'firstGrant': 6, 'lockType': <LockType.SHARED: 1>}}}, 'failed': False}}
-defaultdict(<class 'list'>, {'T1': [' '], 'T2': [' '], 'x2.1': ['T2'], 'x2.3': ['T2'], 'x2.4': ['T2'], 'x2.5': ['T2'], 'x2.6': ['T2'], 'x2.7': ['T2'], 'x2.8': ['T2'], 'x2.9': ['T2'], 'x2.10': ['T2'], 'x1.2': ['T2']})
 T1 commits
 T2 commits

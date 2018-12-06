@@ -1,5 +1,3 @@
 T1 commits
 T3 commits
-{'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 6, 'locks': {}, 'failed': False}}
-defaultdict(<class 'list'>, {'T2': [' ']})
 T2 - x2: 100
