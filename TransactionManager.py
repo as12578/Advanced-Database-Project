@@ -4,6 +4,8 @@ from LockManager import LockType
 import Timer
 from collections import defaultdict
 
+list1 = list()
+
 class Operation(Enum):
 	READ = 1
 	WRITE = 2
@@ -25,6 +27,8 @@ class TransactionManager:
 			}
 
 	def endTransaction(transactionName, endTime):
+		SM = DatabaseManager.DatabaseManager.SM
+
 		commitValues = False
 
 		if not TransactionManager.shouldTransactionAbort(transactionName):
@@ -32,40 +36,42 @@ class TransactionManager:
 
 		if commitValues:
 			print('%s commits'%transactionName)
-			TransactionManager.commitTransaction(transactionName, endTime)
 		else:
 			print('%s aborts'%transactionName)
-			TransactionManager.abortTransaction(transactionName)
 
-	def commitTransaction(transaction, endTime):
-		SM = DatabaseManager.DatabaseManager.SM
-		transactionLocks = TransactionManager.transactions[transaction]['locks']
+		transactionLocks = TransactionManager.transactions[transactionName]['locks']
 		for key in transactionLocks:
-			commitData = True
+			commitData = commitValues
 			for site in transactionLocks[key]:
 				commitData = commitData and 'lockType' in transactionLocks[key][site] and transactionLocks[key][site]['lockType'] == LockType.EXCLUSIVE
 
 			for site in transactionLocks[key]:
 				if commitData:
-					SM.sites[site]['site'].DM.persistTransactionKey(transaction, key, endTime)
+					SM.sites[site]['site'].DM.persistTransactionKey(transactionName, key, endTime)
 				else:
 					SM.sites[site]['site'].DM.revertKey(key)
 
-				SM.sites[site]['site'].LM.releaseLock(transaction, key, commitData)
+				SM.sites[site]['site'].LM.releaseLock(transactionName, key, commitData)
 
-		SM.clearPendingOperationsForTransaction(transaction)
-		del TransactionManager.transactions[transaction]
+		SM.clearPendingOperationsForTransaction(transactionName)
+		del TransactionManager.transactions[transactionName]
 
 	def abortTransaction(transaction):
 		SM = DatabaseManager.DatabaseManager.SM
-		transactionLocks = TransactionManager.transactions[transaction]['locks']
+		TransactionManager.transactions[transaction]['failed'] = True
+		transactionDetails = TransactionManager.transactions[transaction]
+		transactionLocks = transactionDetails['locks']
 		for key in transactionLocks:
 			for site in transactionLocks[key]:
 				SM.sites[site]['site'].DM.revertKey(key)
-				SM.sites[site]['site'].LM.releaseLock(transaction, key, commitData)
+				SM.sites[site]['site'].LM.releaseLock(transaction, key, False)
 
-		SM.clearPendingOperationsForTransaction(transaction)
-		del TransactionManager.transactions[transaction]
+		transactionDetails['locks'] = {}
+
+		TransactionManager.transactions[transaction]['pendingOperation'] = {
+			'operation': Operation.NONE,
+			'options': {}
+		}
 
 	def shouldTransactionAbort(transaction):
 		if TransactionManager.transactions[transaction]['failed']:
@@ -108,41 +114,49 @@ class TransactionManager:
 		print('======================================================================')
 
 	def dfs_visit(G, u, color, found_cycle):
-		list1 = list()
 		if found_cycle[0]:													# - Stop dfs if cycle is found.
 			return
 		color[u] = "gray"
-		list1.append(u)															# - Gray nodes are in the current path
+		list1.append(u)
+		# print("u app",list1)															# - Gray nodes are in the current path
 		for v in G[u]:															# - Check neighbors, where G[u] is the adjacency list of u.
 			if v.isspace() != True:
 				if color[v] == "gray":									# - Case where a loop in the current path is present.
 					found_cycle[0] = True
-					if list1.index(v)>0:
+					if list1.index(v) > 0:
 						idx = int(list1.index(v))
 						del list1[0:idx]
-						TransactionManager.cycle_nodes = list1
+						TransactionManager.cycle_nodes = list1[:]
+						# print("list1",list1)
+					TransactionManager.cycle_nodes = list1[:]
+					# print("cycle_nodes1",TransactionManager.cycle_nodes)
 					return
-				if color[v] == "white":								 # - Call dfs_visit recursively.
+				if color[v] == "white":								# - Call dfs_visit recursively.
 					TransactionManager.dfs_visit(G, v, color, found_cycle)
 		color[u] = "black"
 		list1.remove(u)
+		#print("cycle_nodes2",TransactionManager.cycle_nodes)
 
 
 	def cycle_exists(G):													# - G is a directed graph
-		print (G)
+		#print (G)
 		color = { u : "white" for u in G}			# - All nodes are initially white
 		found_cycle = [False]										# - Define found_cycle as a list
 
 		for u in G:															# - Visit all nodes
-			 if color[u] == "white":
-				 TransactionManager.dfs_visit(G, u, color, found_cycle)
-			 if found_cycle[0]:
-				 break
+			if color[u] == "white":
+				TransactionManager.dfs_visit(G, u, color, found_cycle)
+			if found_cycle[0]:
+				#print("cycle",TransactionManager.cycle_nodes)
+				list1.clear()
+				#print("cycle",TransactionManager.cycle_nodes)
+				break
 		return found_cycle[0]
 
 
 	def detectDeadlock():
-		print (TransactionManager.transactions)
+		#print (TransactionManager.transactions)
+		#print ("trying to detect deadlock")
 		graph = defaultdict(list)
 		for transaction in TransactionManager.transactions:
 			graph[transaction].append(' ')
@@ -155,13 +169,15 @@ class TransactionManager:
 						graph[transaction].append(resource)
 						graph[resource].append(' ')
 		#print("Cycle?", TransactionManager.cycle_exists(graph))
-		if TransactionManager.cycle_exists(graph):
-			filter(lambda k: 'T' in k, TransactionManager.cycle_nodes)	 #list with only transactions in cycle
+		if TransactionManager.cycle_exists(graph) == True:
+			print("Deadlock_detected")
+			TransactionManager.cycle_nodes = list(filter(lambda k: k.startswith('T'),TransactionManager.cycle_nodes))	 #list with only transactions in cycle
+			print("Deadlock detected in transactions",TransactionManager.cycle_nodes)
 			cycle_transaction = dict([(k,TransactionManager.transactions[k]) for k in TransactionManager.cycle_nodes])
-			#dict(filter(lambda x: x in TransactionManager.cycle_nodes ))
-			#for transaction in list1:
-				# if transaction in TransactionManager.transactions:
-					# x = TransactionManager.transactions[transaction]['startTime']
+			youngest_transaction = max((TransactionManager.transactions[k]['startTime'],k) for k in cycle_transaction.keys())
+			print(youngest_transaction[1],"Transaction will be aborted")
+			TransactionManager.abortTransaction(youngest_transaction[1])
+			TransactionManager.detectDeadlock()
 
 	def readValue(transactionName, key):
 		# Read from one site

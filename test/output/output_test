@@ -1,7 +1,5 @@
 T1 - x1: 10
 T1 - x1: 101
-{'T1': {'readOnly': False, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 1, 'locks': {'x1': {'2': {'firstGrant': 6, 'lockType': <LockType.EXCLUSIVE: 2>}}}, 'failed': False}, 'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}, 'T3': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x1'}}, 'startTime': 3, 'locks': {'x1': {'2': {}}}, 'failed': False}, 'T4': {'readOnly': False, 'pendingOperation': {'operation': <Operation.READ: 1>, 'options': {'key': 'x1'}}, 'startTime': 4, 'locks': {'x1': {'2': {}}}, 'failed': False}}
-defaultdict(<class 'list'>, {'T1': [' '], 'x1.2': ['T1', ' ', ' '], 'T2': [' '], 'T3': [' ', 'x1.2'], 'T4': [' ', 'x1.2']})
 T1 aborts
 T3 - x1: 10
 T4 - x1: 10
@@ -264,8 +262,6 @@ T4 commits
 T3 - x1: 150
 T3 commits
 Site 2 - x1: 150
-{'T2': {'readOnly': True, 'pendingOperation': {'operation': <Operation.NONE: 0>, 'options': {}}, 'startTime': 2, 'locks': {}, 'failed': False}}
-defaultdict(<class 'list'>, {'T2': [' ']})
 Site 1 - x2: 100
 Site 2 - x2: 100
 Site 3 - x2: 100
