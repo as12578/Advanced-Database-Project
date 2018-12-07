@@ -8,15 +8,6 @@ def bootstrap(DBM):
 	# Set up all objects and data in all sites
 	DBM.init(Timer.CURRENT_TIME)
 
-def printState(DBM):
-	print('\n=============================System State=============================')
-	print('Current Time =', Timer.CURRENT_TIME)
-	TM = DBM.TM
-	SM = DBM.SM
-	TM.print()
-	SM.print()
-	print('======================================================================')
-
 if __name__ == '__main__':
 
 	inputSource = sys.stdin
@@ -47,7 +38,7 @@ if __name__ == '__main__':
 
 
 		elif line.startswith('querystate()'):
-			printState(DBM)
+			DBM.printState()
 			continue
 
 
@@ -124,4 +115,4 @@ if __name__ == '__main__':
 
 		# print()
 
-	# printState(DBM)
+	# DBM.printState()

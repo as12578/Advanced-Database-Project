@@ -1,9 +1,19 @@
 import TransactionManager
 import SiteManager
+import Timer
 
 class DatabaseManager:
 	TM = TransactionManager.TransactionManager
 	SM = SiteManager.SiteManager
+
+	def printState():
+		print('\n=============================System State=============================')
+		print('Current Time =', Timer.CURRENT_TIME)
+		TM = DatabaseManager.TM
+		SM = DatabaseManager.SM
+		TM.print()
+		SM.print()
+		print('======================================================================')
 
 	def siteStrKey(siteStr):
 		return int(siteStr)
