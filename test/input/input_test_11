@@ -1,3 +1,4 @@
+// All transactions proceed once sites recover and commit
 begin(T1)
 beginRO(T2)
 begin(T3)
@@ -10,3 +11,4 @@ recover(2)
 end(T1)
 querystate()
 end(T3)
+end(T2)

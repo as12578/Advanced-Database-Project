@@ -1,3 +1,4 @@
+// No transactions abort and both read once site recovers
 beginRO(T1)
 beginRO(T2)
 fail(2)
