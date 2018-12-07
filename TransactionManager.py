@@ -11,6 +11,11 @@ class Operation(Enum):
 	WRITE = 2
 	NONE = 0
 
+class AbortReason(Enum):
+	SITE_FAIL = 1
+	DEADLOCK = 2
+	NONE = 0
+
 class TransactionManager:
 	transactions = {}
 
@@ -23,7 +28,8 @@ class TransactionManager:
 				},
 				'startTime': startTime,
 				'locks': {},
-				'failed': False
+				'failed': False,
+				'abortReason': AbortReason.NONE
 			}
 
 	def endTransaction(transactionName, endTime):
@@ -37,7 +43,7 @@ class TransactionManager:
 		if commitValues:
 			print('%s commits'%transactionName)
 		else:
-			print('%s aborts'%transactionName)
+			print('%s aborts due to %s'%(transactionName, TransactionManager._abortReasonToText(TransactionManager.transactions[transactionName]['abortReason'])))
 
 		transactionLocks = TransactionManager.transactions[transactionName]['locks']
 		for key in transactionLocks:
@@ -56,9 +62,20 @@ class TransactionManager:
 		SM.clearPendingOperationsForTransaction(transactionName)
 		del TransactionManager.transactions[transactionName]
 
-	def abortTransaction(transaction):
+	def _abortReasonToText(abortReason):
+		if abortReason == AbortReason.SITE_FAIL:
+			return 'site failed'
+
+		if abortReason == AbortReason.DEADLOCK:
+			return 'deadlock'
+
+		else:
+			return 'failure'
+
+	def abortTransaction(transaction, abortReason):
 		SM = DatabaseManager.DatabaseManager.SM
 		TransactionManager.transactions[transaction]['failed'] = True
+		TransactionManager.transactions[transaction]['abortReason'] = abortReason
 		transactionDetails = TransactionManager.transactions[transaction]
 		transactionLocks = transactionDetails['locks']
 		for key in transactionLocks:
@@ -77,6 +94,7 @@ class TransactionManager:
 		if TransactionManager.transactions[transaction]['failed']:
 			return True
 
+		# Can be removed. Leaving it in for safety
 		for key in TransactionManager.transactions[transaction]['locks']:
 			for site in TransactionManager.transactions[transaction]['locks'][key]:
 				# site where lock was obtained and value read/written. If site failed after first access, abort
@@ -118,7 +136,6 @@ class TransactionManager:
 			return
 		color[u] = "gray"
 		list1.append(u)
-		# print("u app",list1)															# - Gray nodes are in the current path
 		for v in G[u]:															# - Check neighbors, where G[u] is the adjacency list of u.
 			if v.isspace() != True:
 				if color[v] == "gray":									# - Case where a loop in the current path is present.
@@ -126,23 +143,16 @@ class TransactionManager:
 					if list1.index(v) > 0:
 						idx = int(list1.index(v))
 						del list1[0:idx]
-						# TransactionManager.cycle_nodes = list1[:]
-						# print("list1",list1)
 					TransactionManager.cycle_nodes = list1[:]
-					# print("list1",list1)
-					# print("cycle_nodes1",TransactionManager.cycle_nodes)
 					return
 				if color[v] == "white":								# - Call dfs_visit recursively.
 					TransactionManager.dfs_visit(G, v, color, found_cycle)
 		color[u] = "black"
-		# print("u to remove", u)
 		if u in list1:
 			list1.remove(u)
-		#print("cycle_nodes2",TransactionManager.cycle_nodes)
 
 
 	def cycle_exists(G):													# - G is a directed graph
-		#print (G)
 		color = { u : "white" for u in G}			# - All nodes are initially white
 		found_cycle = [False]										# - Define found_cycle as a list
 
@@ -150,16 +160,12 @@ class TransactionManager:
 			if color[u] == "white":
 				TransactionManager.dfs_visit(G, u, color, found_cycle)
 			if found_cycle[0]:
-				#print("cycle",TransactionManager.cycle_nodes)
 				list1.clear()
-				#print("cycle",TransactionManager.cycle_nodes)
 				break
 		return found_cycle[0]
 
 
 	def detectDeadlock():
-		#print (TransactionManager.transactions)
-		#print ("trying to detect deadlock")
 		graph = defaultdict(list)
 		for transaction in TransactionManager.transactions:
 			graph[transaction].append(' ')
@@ -171,15 +177,15 @@ class TransactionManager:
 					else:
 						graph[transaction].append(resource)
 						graph[resource].append(' ')
-		#print("Cycle?", TransactionManager.cycle_exists(graph))
+
 		if TransactionManager.cycle_exists(graph) == True:
-			print("Deadlock_detected")
-			TransactionManager.cycle_nodes = list(filter(lambda k: k.startswith('T'),TransactionManager.cycle_nodes))	 #list with only transactions in cycle
-			print("Deadlock detected in transactions",TransactionManager.cycle_nodes)
+
+			TransactionManager.cycle_nodes = list(filter(lambda k: k.startswith('T'),TransactionManager.cycle_nodes))
+
 			cycle_transaction = dict([(k,TransactionManager.transactions[k]) for k in TransactionManager.cycle_nodes])
 			youngest_transaction = max((TransactionManager.transactions[k]['startTime'],k) for k in cycle_transaction.keys())
-			print(youngest_transaction[1],"Transaction will be aborted")
-			TransactionManager.abortTransaction(youngest_transaction[1])
+
+			TransactionManager.abortTransaction(youngest_transaction[1], AbortReason.DEADLOCK)
 			TransactionManager.detectDeadlock()
 
 	def readValue(transactionName, key):
@@ -207,7 +213,6 @@ class TransactionManager:
 				if SM.sites[site.site]['available'] == False:
 					failedSites.append(site)
 				elif key_index % 2 == 0 and (DM.getLastCommitTime(key) < SM.sites[site.site]['startTime'] or DM.getFirstCommitTimeSinceStart(key) > TransactionManager.transactions[transactionName]['startTime']):
-					# TODO: check if all sites unstable
 					unstableSites.append(site)
 					continue
 				else:
@@ -226,7 +231,7 @@ class TransactionManager:
 					})
 
 			if len(unstableSites) == len(sites):
-				# TODO: Transaction keeps waiting
+				# Transaction keeps waiting
 				pass
 
 			return
@@ -351,7 +356,6 @@ class TransactionManager:
 			for key in transactionDetails['locks']:
 				for lockSite in transactionDetails['locks'][key]:
 					if site == lockSite and transactionDetails['locks'][key][lockSite] != {}:
-						TransactionManager.transactions[transaction]['failed'] = True
 						transactionFailed = True
 						break
 					elif site == lockSite:
@@ -362,6 +366,7 @@ class TransactionManager:
 						SM.sites[site]['pendingOperations'].append(TransactionManager._getSitePendingOperationFromTransaction(transaction))
 
 				if transactionFailed:
+					TransactionManager.abortTransaction(transaction, AbortReason.SITE_FAIL)
 					break
 
 			if transactionFailed:

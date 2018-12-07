@@ -5,6 +5,6 @@ T1 - x6: 60
 T2 - x2: 20
 T5 commits
 T4 commits
-T3 aborts
+T3 aborts due to site failed
 T2 commits
 T1 commits
